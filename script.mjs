@@ -5,12 +5,12 @@ const server = express();
 const port = (process.env.PORT || 8000);
 
 const quotes = [
-    "quote1", 
-    "quote2", 
-    "quote3",
-    "quote4",
-    "quote5",
-    "quote6"
+    "I think, therefore I am. - René Descartes", 
+    "The only thing we have to fear is fear itself. - Franklin D. Roosevelt", 
+    "The only impossible journey is the one you never begin. - Tony Robbins",
+    "Life is 10% what happens to us and 90% how we react to it. - Charles R. Swindoll",
+    "Life is trying things to see if they work. - Ray Bradbury",
+    "I never look back, darling. It distracts from the now. - Edna Mode, The Incredibles"
     ];
 
 server.set('port', port);
