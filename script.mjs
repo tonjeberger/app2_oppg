@@ -15,17 +15,9 @@ function getRoot(req, res, next) {
 server.get("/", getRoot);
 
 server.get("/tmp/poem", (req, res) => {
-    res.send("Dikt her");
+    res.send("I eat my peas with honey. I've done it all my life. It makes the peas taste funny. But it keeps them on the knife!");
 })
 
 server.listen(server.get('port'), function () {
     console.log('server running', server.get('port'));
 });
-
-// server.get("/tmp/poem", function (){
-//     console.log("heihei", server.get('port'));
-// })
-
-// server.get("/tmp/poem", getPoem);
-
-// server.listen("/tmp/poem", getPoem);
