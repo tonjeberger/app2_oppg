@@ -16,6 +16,8 @@ const quotes = [
 server.set('port', port);
 server.use(express.static('public'));
 
+
+// functions
 function getRoot(req, res, next) {
     res.status(HTTP_CODES.SUCCESS.OK).send('Hello World').end();
 }
@@ -24,6 +26,8 @@ function getQuote(){
     return quotes[Math.floor(Math.random() * quotes.length)];
 }
 
+
+// get requests
 server.get("/", getRoot);
 
 server.get("/tmp/poem", (req, res) => {
@@ -33,6 +37,36 @@ server.get("/tmp/poem", (req, res) => {
 server.get("/tmp/quote", (req, res) => {
     res.send(getQuote());
 })
+
+
+
+
+// //post requests
+// server.get("/tmp/sum/:a/:b", (req, res) => {
+    //     res.send(req.params.a + req.params.b);
+    // })
+    
+    // // server.post("/tmp/sum/:a/:b", (req, res) => {
+        // //     res.send("halloogdfgfdoo");
+        // // })
+
+        
+server.get('/tmp/sum/:a/:b', (req, res) => {
+    //res.send("add two numbers separeted by a '/' in the url to add them together");
+    const a = parseInt(req.params.a);
+    const b = parseInt(req.params.b);
+    const sum = a + b;
+    res.send(sum.toString());
+})
+
+server.post('/tmp/sum/:a/:b', (req, res) => {
+    const a = parseInt(req.params.a);
+    const b = parseInt(req.params.b);
+    const sum = a + b;
+    res.send(sum.toString());
+    console.log("parameters added")
+});
+
 
 server.listen(server.get('port'), function () {
     console.log('server running', server.get('port'));
