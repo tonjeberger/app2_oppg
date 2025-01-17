@@ -27,7 +27,7 @@ function getQuote(){
 }
 
 
-// get requests
+// requests
 server.get("/", getRoot);
 
 server.get("/tmp/poem", (req, res) => {
@@ -37,10 +37,6 @@ server.get("/tmp/poem", (req, res) => {
 server.get("/tmp/quote", (req, res) => {
     res.send(getQuote());
 })
-
-
-
-
 
 server.post('/tmp/sum/:a/:b', (req, res) => {
     const a = parseInt(req.params.a);
@@ -54,29 +50,3 @@ server.listen(server.get('port'), function () {
     console.log('server running', server.get('port'));
 });
 
-
-
-
-
-
-// //post requests
-// server.get("/tmp/sum/:a/:b", (req, res) => {
-    //     res.send(req.params.a + req.params.b);
-    // })
-    
-    // // server.post("/tmp/sum/:a/:b", (req, res) => {
-        // //     res.send("halloogdfgfdoo");
-        // // })
-
-        
-// server.get('/tmp/sum/:a/:b', (req, res) => {
-//     //res.send("add two numbers separeted by a '/' in the url to add them together");
-//     const a = parseInt(req.params.a);
-//     const b = parseInt(req.params.b);
-//     const sum = a + b;
-//     res.send(sum.toString());
-// })
-
-// let getPost = fetch("http://localhost:8000/tmp/sum")
-//     .then(response => response.text())
-//     .then(data => console.log(data));
