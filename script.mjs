@@ -14,7 +14,12 @@ const quotes = [
     ];
 
 server.set('port', port);
-server.use(express.static('public'));
+server.use(express.static('public')); 
+// static er noe som ikke endrer seg. Denne linjen kobler til public mappen
+// når vi har kalt den for index.html så vil den automatisk hente den filen. om det heter noe annet går det ikke
+// index er default/standard
+// det som er klienten kan man legge i denne mappen, for der skal det ikke være noe sensitivt
+// vi kan også lage nye mapper inne i public-mappen igjen. Vi har lagt en css-mappe, og da kan den også hentes
 
 
 // functions
@@ -44,6 +49,7 @@ server.post('/tmp/sum/:a/:b', (req, res) => {
     const sum = a + b;
     res.send(sum.toString());
 });
+// ser via postman at denne fungerer
 
 
 server.listen(server.get('port'), function () {
