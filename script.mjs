@@ -1,5 +1,6 @@
 import express from 'express'
 import HTTP_CODES from './utils/httpCodes.mjs';
+import {suits, values} from './kortdata.mjs';
 
 const server = express();
 const port = (process.env.PORT || 8000);
@@ -52,7 +53,69 @@ server.post('/tmp/sum/:a/:b', (req, res) => {
 // ser via postman at denne fungerer
 
 
+
+
+
+// Kortstokk
+const allDecks = {};
+
+function newDeck(){
+    
+    const deck = [];
+    suits.forEach(suit => {
+        values.forEach(value => {
+            deck.push({suit, value});
+        });
+    });
+    let deck_id = 4;//Math.floor(Math.random() * 10);
+    allDecks[deck_id] = deck;
+    return {deck_id, deck};
+}
+
+server.post('temp/deck', (req, res) => {
+    res.send(newDeck());
+});
+
+server.get('/temp/deck', (req, res) => {
+    res.send(newDeck());
+});
+
+server.get('/temp/deck/:deck_id', (req, res) => { ///:deck_id
+    const deck_id = parseInt(req.params.deck_id);
+    const deck = allDecks[deck_id];
+    if(deck){
+
+        res.send({ deck_id, deck });
+    }    
+    else{
+        res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send('Deck ' + deck_id + ' not found');
+    }
+});
+
+
+async function fetchDeck(deck_id){
+    console.log(deck_id);
+    try {
+        const response = await fetch('http://localhost:8000/temp/deck/' + deck_id);
+        if (!response.ok) {
+            throw new Error('Nope');
+        }
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+      //console.error('Error:', error);
+    }
+
+}
+
+fetchDeck(4).then(data => {
+    if (data) {
+        console.log('Deck:', data);
+    }
+});
+
+
 server.listen(server.get('port'), function () {
     console.log('server running', server.get('port'));
 });
-
