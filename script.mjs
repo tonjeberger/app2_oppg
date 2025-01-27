@@ -67,7 +67,7 @@ function newDeck(){
             deck.push({suit, value});
         });
     });
-    let deck_id = 4;//Math.floor(Math.random() * 10);
+    let deck_id = Math.floor(Math.random() * 10);
     allDecks[deck_id] = deck;
     return {deck_id, deck};
 }
@@ -101,7 +101,7 @@ async function fetchDeck(deck_id){
             throw new Error('Nope');
         }
         const data = await response.json();
-        console.log(data);
+        console.log(data); 
         return data;
     } catch (error) {
       //console.error('Error:', error);
