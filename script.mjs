@@ -29,7 +29,7 @@ function getRoot(req, res, next) {
 }
 
 function getQuote(){
-    return quotes[Math.floor(Math.random() * quotes.length)];
+    return quotes[Math.ceil(Math.random() * quotes.length)];
 }
 
 
@@ -57,6 +57,9 @@ server.post('/tmp/sum/:a/:b', (req, res) => {
 
 
 // Kortstokk
+
+
+
 const allDecks = {};
 
 function newDeck(){
@@ -72,6 +75,16 @@ function newDeck(){
     return {deck_id, deck};
 }
 
+function shuffleDeck(deck_id){
+    const deck = allDecks[deck_id];
+    const shuffledDeck = deck.sort(() => Math.random() - 0.5);
+    allDecks[deck_id] = shuffledDeck;
+    return shuffledDeck;
+};
+
+
+
+
 server.post('temp/deck', (req, res) => {
     res.send(newDeck());
 });
@@ -80,11 +93,11 @@ server.get('/temp/deck', (req, res) => {
     res.send(newDeck());
 });
 
-server.get('/temp/deck/:deck_id', (req, res) => { ///:deck_id
+server.get('/temp/deck/:deck_id', (req, res) => { 
     const deck_id = parseInt(req.params.deck_id);
     const deck = allDecks[deck_id];
     if(deck){
-
+        
         res.send({ deck_id, deck });
     }    
     else{
@@ -92,28 +105,60 @@ server.get('/temp/deck/:deck_id', (req, res) => { ///:deck_id
     }
 });
 
+server.patch('temp/deck/shuffle/:deck_id', (req, res) => {
+    const deck_id = parseInt(req.params.deck_id);
+    const shuffledDeck = shuffleDeck(deck_id);
+    res.send(shuffledDeck);
+    // const deck = allDecks[deck_id];
+    // const randomDeck = deck[Math.floor(Math.random() * deck.length)];
+    // res.send(randomDeck);
 
-async function fetchDeck(deck_id){
-    console.log(deck_id);
-    try {
-        const response = await fetch('http://localhost:8000/temp/deck/' + deck_id);
-        if (!response.ok) {
-            throw new Error('Nope');
-        }
-        const data = await response.json();
-        console.log(data); 
-        return data;
-    } catch (error) {
-      //console.error('Error:', error);
-    }
 
-}
+    // må hente kortstokken og bruke Math.random på en måte
+    // for å stokke kortene i den spesifiserte kortstokken basert på deck_id
 
-fetchDeck(4).then(data => {
-    if (data) {
-        console.log('Deck:', data);
-    }
+
 });
+
+server.get('temp/deck/shuffle/:deck_id', (req, res) => {
+    const deck_id = parseInt(req.params.deck_id);
+    const deck = allDecks[deck_id];
+    if(deck){
+        
+        res.send({ deck_id, deck });
+    }    
+    else{
+        res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send('Deck ' + deck_id + ' not found');
+    } 
+});
+
+server.get('temp/deck/:deck_id/card', (req, res) => {
+    //trekk og returner et tilfeldig kort fra kortstokken
+    // må ramdomize hvilken index som skal returneres
+}); 
+
+
+// async function fetchDeck(deck_id){
+//     console.log(deck_id);
+//     try {
+//         const response = await fetch('http://localhost:8000/temp/deck/' + deck_id);
+//         if (!response.ok) {
+//             throw new Error('Nope');
+//         }
+//         const data = await response.json();
+//         console.log(data); 
+//         return data;
+//     } catch (error) {
+//       //console.error('Error:', error);
+//     }
+
+// }
+
+// fetchDeck(4).then(data => {
+//     if (data) {
+//         console.log('Deck:', data);
+//     }
+// });
 
 
 server.listen(server.get('port'), function () {
