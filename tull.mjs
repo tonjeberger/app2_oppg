@@ -31,3 +31,34 @@ j();
 
 // vi skal løse dette med singleton pattern
 
+
+
+
+loadData();
+
+async function loadData() {
+    
+    try {
+
+        let response = await fetch(url);
+        let data = await response.json();
+        console.log(data);
+
+        //if(Array.isArray(data.deck)){
+        for(let value of data.deck){
+            let theDiv = document.createElement('div');
+                theDiv.innerHTML = `
+                    <h2>${value.suit} ${value.value}</h2>
+                    <hr>
+                `;
+            deckContainer.appendChild(theDiv);
+        }
+    //}
+
+        // deckContainer.innerHTML = data;
+        return data;
+        
+    } catch (error) {
+        console.log('Error:', error);
+    }
+};
