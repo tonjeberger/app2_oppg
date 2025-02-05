@@ -1,9 +1,28 @@
 import express from 'express'
+//import cors from 'cors';
 import HTTP_CODES from './utils/httpCodes.mjs';
 import {suits, values} from './kortdata.mjs';
+import log from './modules/log.mjs';
+import { LOG_LEVELS, eventLogger } from './modules/log.mjs';
 
 const server = express();
 const port = (process.env.PORT || 8000);
+const ENABLE_LOGGING = false; // denne blir ikke brukt noe sted nå, men denne kan vi sette til false for å ikke logge
+
+const logger = log(LOG_LEVELS.VERBOSE);
+
+server.set('port', port);
+server.use(logger); // hver gang det kommer en request så vil log-funksjonen kjøres. om det er noe man ikke vil logge legger man denne under det i koden
+server.use(express.static('public')); // middleware som gjør at vi kan hente filer fra public-mappen
+//server.use(cors({origin: 'http://localhost:8000/temp/deck'})); // middleware som gjør at vi kan hente data fra serveren fra en annen server enn localhost:8000
+
+
+server.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); // Allow all origins
+    //res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+    //res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+    next();
+});
 
 const quotes = [
     "I think, therefore I am. - René Descartes", 
@@ -14,17 +33,9 @@ const quotes = [
     "I never look back, darling. It distracts from the now. - Edna Mode, The Incredibles"
     ];
 
-server.set('port', port);
-server.use(express.static('public')); 
-// static er noe som ikke endrer seg. Denne linjen kobler til public mappen
-// når vi har kalt den for index.html så vil den automatisk hente den filen. om det heter noe annet går det ikke
-// index er default/standard
-// det som er klienten kan man legge i denne mappen, for der skal det ikke være noe sensitivt
-// vi kan også lage nye mapper inne i public-mappen igjen. Vi har lagt en css-mappe, og da kan den også hentes
-
-
 // functions
 function getRoot(req, res, next) {
+    eventLogger("Noen spurte etter root")
     res.status(HTTP_CODES.SUCCESS.OK).send('Hello World').end();
 }
 
@@ -70,7 +81,7 @@ function newDeck(){
             deck.push({suit, value});
         });
     });
-    let deck_id = Math.floor(Math.random() * 10);
+    let deck_id = Math.floor(Math.random() * 10)// toString(Math.floor(Math.random() * 10));
     allDecks[deck_id] = deck;
     return {deck_id, deck};
 }
@@ -85,6 +96,7 @@ function shuffleDeck(deck_id){
 
 
 
+ 
 server.post('temp/deck', (req, res) => {
     res.send(newDeck());
 });
@@ -96,7 +108,7 @@ server.get('/temp/deck', (req, res) => {
 server.get('/temp/deck/:deck_id', (req, res) => { 
     const deck_id = parseInt(req.params.deck_id);
     const deck = allDecks[deck_id];
-    if(deck){
+    if(deck){ 
         
         res.send({ deck_id, deck });
     }    
@@ -106,7 +118,7 @@ server.get('/temp/deck/:deck_id', (req, res) => {
 });
 
 server.patch('temp/deck/shuffle/:deck_id', (req, res) => {
-    const deck_id = parseInt(req.params.deck_id);
+    const deck_id = req.params.deck_id; //parseInt(req.params.deck_id);
     const shuffledDeck = shuffleDeck(deck_id);
     res.send(shuffledDeck);
     // const deck = allDecks[deck_id];
