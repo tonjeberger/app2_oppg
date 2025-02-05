@@ -1,6 +1,6 @@
 node_modules/
 logs/
-/tull.mjs
+tull/
 
 # her kan vi legge til mapper og filer som vi ikke vil ha med i git-repoet
 
