@@ -1,7 +1,7 @@
 import express from 'express'
 //import cors from 'cors';
 import HTTP_CODES from './utils/httpCodes.mjs';
-import {suits, values} from './kortdata.mjs';
+import {suits, values} from './uke_4_kortstokk/kortdata.mjs';
 import log from './modules/log.mjs';
 import { LOG_LEVELS, eventLogger } from './modules/log.mjs';
 
@@ -93,6 +93,12 @@ function shuffleDeck(deck_id){
     return shuffledDeck;
 };
 
+function drawCard(deck_id){
+    const deck = allDecks[deck_id];
+    const randomCard = deck[Math.floor(Math.random() * deck.length)];
+    return randomCard;
+}
+
 
 
 
@@ -145,8 +151,9 @@ server.get('temp/deck/shuffle/:deck_id', (req, res) => {
 });
 
 server.get('temp/deck/:deck_id/card', (req, res) => {
-    //trekk og returner et tilfeldig kort fra kortstokken
-    // må ramdomize hvilken index som skal returneres
+    const deck_id = parseInt(req.params.deck_id);
+    const deck = allDecks[deck_id];
+    res.send(drawCard(deck_id));
 }); 
 
 
