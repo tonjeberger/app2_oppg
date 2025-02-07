@@ -1,0 +1,20 @@
+function newSessionInfo() {
+    let token = Math.random().toString(36);
+
+    if (sessionInfo.length == 0) {
+        sessionInfo = {
+            token: token,
+            sessionStart: Date.now(),
+            sessionEnd: null,
+            clicks: 0
+        };
+    };
+}
+undefined
+undefined
+undefined
+{}
+0.avqqet9har6,1738940066858,null,0
+0.9jasapfshrm,1738940087238,null,0
+0.oiwq0i3tom8,1738940126713,null,0
+0.6qo2ezd5qxv,1738940416736,null,0

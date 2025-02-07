@@ -1,10 +1,10 @@
 import express from 'express'
-
 import HTTP_CODES from './utils/httpCodes.mjs';
 import {suits, values} from './uke_4_kortstokk/kortdata.mjs';
 import {quotes, poem} from './uke_3_dikt_sitat/dikt_sitat.mjs';
 import log from './modules/log.mjs';
 import { LOG_LEVELS, eventLogger } from './modules/log.mjs';
+import {newSessionInfo, } from './modules/saveSessionInfo.mjs';
 
 
 const server = express();
@@ -18,13 +18,12 @@ const logger = log(LOG_LEVELS.VERBOSE);
 server.set('port', port);
 server.use(logger); // hver gang det kommer en request så vil log-funksjonen kjøres. om det er noe man ikke vil logge legger man denne under det i koden
 server.use(express.static('public')); // middleware som gjør at vi kan hente filer fra public-mappen
-//server.use(cors({origin: 'http://localhost:8000/temp/deck'})); // middleware som gjør at vi kan hente data fra serveren fra en annen server enn localhost:8000
-
+server.use(newSessionInfo); // middleware som kjøres hver gang det kommer en request. Denne funksjonen ligger i saveSessionInfo.mjs
 
 server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // Allow all origins
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+    // res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+    // res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
     next();
 });
 
