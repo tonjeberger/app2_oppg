@@ -24,8 +24,8 @@ server.use(express.static('public')); // middleware som gjør at vi kan hente fi
 
 server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // Allow all origins
-    //res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
-    //res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
     next();
 });
 
@@ -40,13 +40,14 @@ server.use(session({
     secret: "mySecret",
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }
+    cookie: { secure: false, maxAge: 24*60*60*1000 }
 }));
 
 server.get('/', (req, res) => {
     if(req.session.views){
         req.session.views++;
         res.send("you have visited this page " + req.session.views + " times");
+        
     } else {
         req.session.views = 1;
         res.send("Welcome to this page for the first time");
