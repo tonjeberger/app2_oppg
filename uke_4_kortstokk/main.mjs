@@ -62,5 +62,5 @@ async function loadCard(deck_id){
 
 
 drawCard.addEventListener('click', function(evt){
- loadCard(evt.deck_id); 
+ loadCard(evt.deck_id);
 });

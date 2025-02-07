@@ -1,6 +1,5 @@
 import express from 'express'
-import session from 'express-session';
-import FileStore from 'session-file-store';
+
 import HTTP_CODES from './utils/httpCodes.mjs';
 import {suits, values} from './uke_4_kortstokk/kortdata.mjs';
 import {quotes, poem} from './uke_3_dikt_sitat/dikt_sitat.mjs';
@@ -14,7 +13,7 @@ const ENABLE_LOGGING = false; // denne blir ikke brukt noe sted nå, men denne k
 
 const logger = log(LOG_LEVELS.VERBOSE);
 
-const FileStoreMiddleware = new FileStore(session);
+
 
 server.set('port', port);
 server.use(logger); // hver gang det kommer en request så vil log-funksjonen kjøres. om det er noe man ikke vil logge legger man denne under det i koden
@@ -34,25 +33,6 @@ function getRoot(req, res, next) {
     res.status(HTTP_CODES.SUCCESS.OK).send('Hello World').end();
 }
 
-
-server.use(session({
-    store: new FileStoreMiddleware(),
-    secret: "mySecret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false, maxAge: 24*60*60*1000 }
-}));
-
-server.get('/', (req, res) => {
-    if(req.session.views){
-        req.session.views++;
-        res.send("you have visited this page " + req.session.views + " times");
-        
-    } else {
-        req.session.views = 1;
-        res.send("Welcome to this page for the first time");
-    }
-});
 
 
 

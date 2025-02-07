@@ -1,6 +1,7 @@
 node_modules/
 logs/
 tull/
+sessions/
 
 # her kan vi legge til mapper og filer som vi ikke vil ha med i git-repoet
 

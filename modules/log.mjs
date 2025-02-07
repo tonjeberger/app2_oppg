@@ -1,7 +1,8 @@
 //mappenavnet her er modules, som er vanlig å bruke for moduler
 // pipe er en serie med funksjoner som kjøres etter hverandre
 
-//import _ from 'idk' // tror han importerte noe her
+import { text } from "express";
+import fs from "node:fs/promises"
 
 let level_id = 0;
 
@@ -80,7 +81,7 @@ const printLog = async (req, res, next) => {
 
 const saveLog = async (text) => {
     text += "\n";
-    //await fs.appendFile("./logs/log.csv", text)
+    await fs.appendFile("./logs/log.csv", text)
 }
 
 export default log;
