@@ -14,6 +14,8 @@ const ENABLE_LOGGING = false; // denne blir ikke brukt noe sted nå, men denne k
 
 const logger = log(LOG_LEVELS.VERBOSE);
 
+const FileStoreMiddleware = new FileStore(session);
+
 server.set('port', port);
 server.use(logger); // hver gang det kommer en request så vil log-funksjonen kjøres. om det er noe man ikke vil logge legger man denne under det i koden
 server.use(express.static('public')); // middleware som gjør at vi kan hente filer fra public-mappen
@@ -27,20 +29,37 @@ server.use((req, res, next) => {
     next();
 });
 
-
-
-// functions
 function getRoot(req, res, next) {
     eventLogger("Noen spurte etter root")
     res.status(HTTP_CODES.SUCCESS.OK).send('Hello World').end();
 }
 
+
+server.use(session({
+    store: new FileStoreMiddleware(),
+    secret: "mySecret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+}));
+
+server.get('/', (req, res) => {
+    if(req.session.views){
+        req.session.views++;
+        res.send("you have visited this page " + req.session.views + " times");
+    } else {
+        req.session.views = 1;
+        res.send("Welcome to this page for the first time");
+    }
+});
+
+
+
+
+// dikt/sitat
 function getQuote(){
     return quotes[Math.ceil(Math.random() * quotes.length)];
 }
-
-
-// requests
 server.get("/", getRoot);
 
 server.get("/tmp/poem", (req, res) => {
