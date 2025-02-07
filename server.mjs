@@ -1,9 +1,12 @@
 import express from 'express'
-//import cors from 'cors';
+import session from 'express-session';
+import FileStore from 'session-file-store';
 import HTTP_CODES from './utils/httpCodes.mjs';
 import {suits, values} from './uke_4_kortstokk/kortdata.mjs';
+import {quotes, poem} from './uke_3_dikt_sitat/dikt_sitat.mjs';
 import log from './modules/log.mjs';
 import { LOG_LEVELS, eventLogger } from './modules/log.mjs';
+
 
 const server = express();
 const port = (process.env.PORT || 8000);
@@ -24,14 +27,7 @@ server.use((req, res, next) => {
     next();
 });
 
-const quotes = [
-    "I think, therefore I am. - René Descartes", 
-    "The only thing we have to fear is fear itself. - Franklin D. Roosevelt", 
-    "The only impossible journey is the one you never begin. - Tony Robbins",
-    "Life is 10% what happens to us and 90% how we react to it. - Charles R. Swindoll",
-    "Life is trying things to see if they work. - Ray Bradbury",
-    "I never look back, darling. It distracts from the now. - Edna Mode, The Incredibles"
-    ];
+
 
 // functions
 function getRoot(req, res, next) {
@@ -48,7 +44,7 @@ function getQuote(){
 server.get("/", getRoot);
 
 server.get("/tmp/poem", (req, res) => {
-    res.send('I eat my peas with honey <br> I\'ve done it all my life <br> It makes the peas taste funny <br> But it keeps them on the knife!');
+    res.send(poem);
 })
 
 server.get("/tmp/quote", (req, res) => {
