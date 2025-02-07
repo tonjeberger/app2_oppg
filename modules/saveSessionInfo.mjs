@@ -14,6 +14,8 @@ console.log(filepath);
 
 let sessionInfo = {};
 
+
+
 export function newSessionInfo() {
     let token = Math.random().toString(36);
 
