@@ -24,10 +24,10 @@ export function newSessionInfo() {
             sessionEnd: null,
             clicks: 0
         };
-    };
+    };  
 };
 
- const printInfo = async () => {
+export async function printInfo() {
     console.log(sessionInfo);
     await saveSessionInfo(sessionInfo);
 };
@@ -43,5 +43,3 @@ async function saveSessionInfo(newInfo) {
     }
 };  
 
-newSessionInfo();
-printInfo();  
