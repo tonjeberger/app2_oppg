@@ -50,7 +50,7 @@ const logInstance = async (req, res, next) =>{
     await logImportant(req,res),
     await logAlways(req,res)
     next()
-}
+} 
 
 const logVerbose = async (req, res, next) => {
     if(LOG_LEVELS.VERBOSE == currentGlobalLogLevel){//statementet er true hvis loggLevel er større eller lik currentGlobalLogLevel 
@@ -69,7 +69,7 @@ const logImportant = async (req, res, next) => {
 const logAlways = async (req, res, next) => {
     if(LOG_LEVELS.ALWAYS == currentGlobalLogLevel){//statementet er true hvis loggLevel er større eller lik currentGlobalLogLevel 
         await printLog(req,res)
-    }   
+    }    
 
 };
 
@@ -78,7 +78,7 @@ const printLog = async (req, res, next) => {
     console.log(`${Date.now()}|${colorize(req.method)}|${req.url}`);
     await saveLog(`${Date.now()}|${req.method}|${req.url}`); // dele ting inn i små funksjoner for å gjøre det lettere å teste
 };
-
+ 
 const saveLog = async (text) => {
     text += "\n";
     await fs.appendFile("./logs/log.csv", text)

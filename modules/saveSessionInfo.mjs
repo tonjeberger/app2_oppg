@@ -1,16 +1,5 @@
 import fs from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath } from "url";
 
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const directory = __dirname;
-const filename = 'sessionInfo.csv';
-const filepath = path.join(directory, "../sessions", filename);
-
-console.log(filepath);
 
 let sessionInfo = {};
 
@@ -34,6 +23,7 @@ export async function printInfo() {
     await saveSessionInfo(sessionInfo);
 };
 
+
 async function saveSessionInfo(newInfo) {
     newInfo = `${newInfo.token},${newInfo.sessionStart},${newInfo.sessionEnd},${newInfo.clicks}\n`;
     try {
@@ -45,3 +35,11 @@ async function saveSessionInfo(newInfo) {
     }
 };  
 
+export async function readSessionInfo() {
+    try {
+        
+    } catch (error) {
+        console.error("Error reading session info");
+        
+    }
+}
