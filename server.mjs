@@ -4,7 +4,7 @@ import {suits, values} from './uke_4_kortstokk/kortdata.mjs';
 import {quotes, poem} from './uke_3_dikt_sitat/dikt_sitat.mjs';
 import log from './modules/log.mjs';
 import { LOG_LEVELS, eventLogger } from './modules/log.mjs';
-import {newSessionInfo, printInfo} from './modules/saveSessionInfo.mjs';
+import {newSessionInfo, printInfo, readSessionInfo} from './modules/saveSessionInfo.mjs';
 
 
 const server = express();
@@ -12,7 +12,7 @@ const port = (process.env.PORT || 8000);
 const ENABLE_LOGGING = false; // denne blir ikke brukt noe sted nå, men denne kan vi sette til false for å ikke logge
 
 const logger = log(LOG_LEVELS.VERBOSE);
-
+ 
 
 
 server.set('port', port);
@@ -20,7 +20,8 @@ server.use(logger); // hver gang det kommer en request så vil log-funksjonen kj
 server.use(express.static('public')); // middleware som gjør at vi kan hente filer fra public-mappen
 
 
-server.use((req, res, next) => {
+server.use(async (req, res, next) => {
+    // await readSessionInfo();
     newSessionInfo();
     next();
 });

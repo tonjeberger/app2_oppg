@@ -5,7 +5,7 @@ let sessionInfo = {};
 
 let date = new Date();
 
-export function newSessionInfo() {
+export async function newSessionInfo() {
     let token = Math.random().toString(36);
 
     if (Object.keys(sessionInfo).length === 0){
@@ -15,12 +15,13 @@ export function newSessionInfo() {
             sessionEnd: null,
             clicks: 0
         };
+        await saveSessionInfo(sessionInfo);
     };  
 };
 
 export async function printInfo() {
     console.log(sessionInfo);
-    await saveSessionInfo(sessionInfo);
+    //await saveSessionInfo(sessionInfo); // denne er flyttet opp til newSessionInfo
 };
 
 
