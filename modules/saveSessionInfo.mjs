@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 
 let sessionInfo = {};
 
-
+let date = new Date();
 
 export function newSessionInfo() {
     let token = Math.random().toString(36);
@@ -11,7 +11,7 @@ export function newSessionInfo() {
     if (Object.keys(sessionInfo).length === 0){
         sessionInfo = {
             token: token,
-            sessionStart: Date.now(),
+            sessionStart: date.toISOString().replace("T", " ").substring(0, 16),
             sessionEnd: null,
             clicks: 0
         };
