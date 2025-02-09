@@ -12,6 +12,7 @@ console.log(filepath);
 
 let sessionInfo = {};
 
+let newSession = false;
 
 export async function newSessionInfo() {
     let date = new Date();
@@ -33,6 +34,7 @@ export async function newSessionInfo() {
 
 export async function printInfo() {
     console.log(sessionInfo);
+    // await saveSessionInfo(sessionInfo); // denne er flyttet opp i newSessionInfo
 };
 
 // må ha en test her noe sted for å sjekke på om det skal lagres ny sessioninfo,
@@ -74,9 +76,22 @@ export async function readSessionInfo() {
 
 // tenkte å lage en funksjon for når en session skulle avsluttes eller oppdateres
 export async function endSession(){
-    let date = new Date();
-    sessionInfo.sessionEnd = date.toISOString().replace("T", " ").substring(0, 16);
-    await saveSessionInfo(sessionInfo);
-    console.log("Session ended");
-    newSessionInfo();
+    // let date = new Date();
+    // sessionInfo.sessionEnd = date.toISOString().replace("T", " ").substring(0, 16);
+    // await saveSessionInfo(sessionInfo);
+    // console.log("Session ended");
+    // newSessionInfo();
 }; 
+
+
+export async function reuseSession(reuse = true){
+    if(!reuse){
+        await newSessionInfo();
+    } else {
+        await readSessionInfo();
+        if(!sessionInfo || Object.keys(sessionInfo).length === 0){
+            await newSessionInfo();
+        }
+    }
+
+}

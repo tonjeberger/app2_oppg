@@ -8,9 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const deckContainer = document.getElementById('deckContainer');
 const drawCardBtn = document.getElementById('drawCardBtn');
 const shuffleDeckBtn = document.getElementById('shuffleDeckBtn');
-
-    let url = "http://localhost:8000/temp/deck";
-    let currentDeckId = null;
+let url = "http://localhost:8000/temp/deck";
+let currentDeckId = null;
 
     async function loadDeck() {
         try {
@@ -35,7 +34,7 @@ const shuffleDeckBtn = document.getElementById('shuffleDeckBtn');
         } catch (error) {
             console.log('Error:', error);
         }; 
-    }
+    } 
 
     async function loadCard(deck_id){
 
@@ -74,5 +73,6 @@ const shuffleDeckBtn = document.getElementById('shuffleDeckBtn');
     });
 
     loadDeck();
-//loadCard();
+    //loadCard();
+
 });

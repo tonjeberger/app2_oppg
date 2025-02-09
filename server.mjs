@@ -4,7 +4,7 @@ import {newDeck, shuffleDeck, drawCard} from './uke_4_kortstokk/kortFunksjoner.m
 import {quotes, poem} from './uke_3_dikt_sitat/dikt_sitat.mjs';
 import log from './modules/log.mjs';
 import { LOG_LEVELS, eventLogger } from './modules/log.mjs';
-import {newSessionInfo, printInfo, readSessionInfo} from './modules/saveSessionInfo.mjs';
+import {newSessionInfo, printInfo, readSessionInfo, reuseSession} from './modules/saveSessionInfo.mjs';
 
 
 const server = express();
@@ -16,11 +16,12 @@ const logger = log(LOG_LEVELS.VERBOSE);
 let globalSessionInfo = {};
 
 async function init() { //bruker denne slik at 
+    await reuseSession(false);
         globalSessionInfo = await readSessionInfo();
-        if(!globalSessionInfo || Object.keys(globalSessionInfo).length === 0){
-            await newSessionInfo();  
-            globalSessionInfo = await readSessionInfo();
-        }
+        // if(!globalSessionInfo || Object.keys(globalSessionInfo).length === 0){
+        //     await newSessionInfo();  
+        //     globalSessionInfo = await readSessionInfo();
+        // }
         console.log('Global Session Info initialized:', globalSessionInfo);
 }
 
@@ -92,6 +93,7 @@ init().then(() => {
         res.json(newDeck());
         console.log("get deck")
     });
+
 
     server.get('/temp/deck/:deck_id', (req, res) => { 
         const deck_id = parseInt(req.params.deck_id);
