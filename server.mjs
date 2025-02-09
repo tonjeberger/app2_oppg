@@ -18,10 +18,6 @@ let globalSessionInfo = {};
 async function init() { //bruker denne slik at 
     await reuseSession(true);
         globalSessionInfo = await readSessionInfo();
-        // if(!globalSessionInfo || Object.keys(globalSessionInfo).length === 0){
-        //     await newSessionInfo();  
-        //     globalSessionInfo = await readSessionInfo();
-        // }
         console.log('Global Session Info initialized:', globalSessionInfo);
 }
 
