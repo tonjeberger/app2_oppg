@@ -12,7 +12,6 @@ console.log(filepath);
 
 let sessionInfo = {};
 
-let newSession = false;
 
 export async function newSessionInfo() {
     let date = new Date();
@@ -26,7 +25,7 @@ export async function newSessionInfo() {
         sessionInfo = {
             token: token,
             sessionStart: date.toISOString().replace("T", " ").substring(0, 16),
-            sessionEnd: null // må få satt denne til et tidspunkt eller noe
+            sessionEnd: null // vil kunne sette en tid på hvor lenge en session skal vare
         };
         await saveSessionInfo(sessionInfo);
     };  
@@ -84,7 +83,7 @@ export async function endSession(){
 }; 
 
 
-export async function reuseSession(reuse = true){
+export async function reuseSession(reuse = true){ // om vi vil bruke den forrige sessionen setter man true der funksjonen brukes
     if(!reuse){
         await newSessionInfo();
     } else {

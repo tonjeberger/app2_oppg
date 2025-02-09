@@ -16,7 +16,7 @@ const logger = log(LOG_LEVELS.VERBOSE);
 let globalSessionInfo = {};
 
 async function init() { //bruker denne slik at 
-    await reuseSession(false);
+    await reuseSession(true);
         globalSessionInfo = await readSessionInfo();
         // if(!globalSessionInfo || Object.keys(globalSessionInfo).length === 0){
         //     await newSessionInfo();  

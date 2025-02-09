@@ -9,9 +9,12 @@ const deckContainer = document.getElementById('deckContainer');
 const drawCardBtn = document.getElementById('drawCardBtn');
 const shuffleDeckBtn = document.getElementById('shuffleDeckBtn');
 let url = "http://localhost:8000/temp/deck";
-let currentDeckId = null;
+// let currentDeckId = null;
+let currentDeckId = localStorage.getItem('currentDeckId');
 
-    async function loadDeck() {
+async function loadDeck() {
+        console.log('Loading deck');
+        if(currentDeckId === null){
         try {
 
             let response = await fetch(url);
@@ -22,6 +25,7 @@ let currentDeckId = null;
             console.log(data);
 
             currentDeckId = data.deck_id;
+            localStorage.setItem('currentDeckId', currentDeckId);
             console.log('Deck id:', currentDeckId);
 
             let theDiv = document.createElement('div');
@@ -34,6 +38,14 @@ let currentDeckId = null;
         } catch (error) {
             console.log('Error:', error);
         }; 
+     }else {
+            console.log('Deck already loaded:', currentDeckId);
+            let theDiv = document.createElement('div');
+            theDiv.innerHTML = `
+                <h2>Your deck id: ${currentDeckId}</h2>
+            `;
+            deckContainer.appendChild
+        }
     } 
 
     async function loadCard(deck_id){
