@@ -1,66 +1,78 @@
-// import { fetchData } from "./fetches.mjs";
+// // import { fetchData } from "./fetches.mjs";
+// // import {deckContainer, drawCardBtn, shuffleDeckBtn} from '../public/index.html';
 
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
 const deckContainer = document.getElementById('deckContainer');
-const drawCard = document.getElementById('drawCardBtn');
-const shuffleDeck = document.getElementById('shuffleDeckBtn');
+const drawCardBtn = document.getElementById('drawCardBtn');
+const shuffleDeckBtn = document.getElementById('shuffleDeckBtn');
 
+    let url = "http://localhost:8000/temp/deck";
+    let currentDeckId = null;
 
+    async function loadDeck() {
+        try {
 
-let url = "http://localhost:8000/temp/deck";
+            let response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+            let data = await response.json();
+            console.log(data);
 
+            currentDeckId = data.deck_id;
+            console.log('Deck id:', currentDeckId);
 
-loadDeck();
-
-async function loadDeck() {
-    
-    try {
-
-        let response = await fetch(url);
-        let data = await response.json();
-        console.log(data);
-
-        let theDiv = document.createElement('div');
-            theDiv.innerHTML = `
-                <h2>Your deck id: ${data.deck_id}</h2>
-                
-                `;
-        deckContainer.appendChild(theDiv);
-        return data;
-
-    } catch (error) {
-        console.log('Error:', error);
-    };
-}
-
-async function loadCard(deck_id){
-
-    try {
-        const drawCardUrl = url + '/' + deck_id + '/card';
-        let response = await fetch(drawCardUrl);
-        let data = await response.json();
-        console.log(data);
-
-        for(let card of data.deck){
             let theDiv = document.createElement('div');
                 theDiv.innerHTML = `
-                    <h2>${card.suit} ${card.value}</h2>
-                    
-                `;
+                    <h2>Your deck id: ${data.deck_id}</h2>
+                    `;
             deckContainer.appendChild(theDiv);
-        }
+            return data;
 
-        return data;
-        
-    } catch (error) {
-        console.log('Error:', error);
+        } catch (error) {
+            console.log('Error:', error);
+        }; 
     }
 
-};
+    async function loadCard(deck_id){
 
+        try {
+            const drawCardUrl = url + '/' + deck_id + '/card';
+            let response = await fetch(drawCardUrl);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            let data = await response.json();
+            console.log(data);
 
+            for(let card of data.deck){
+                let theDiv = document.createElement('div');
+                    theDiv.innerHTML = `
+                        <h2>${card.suit} ${card.value}</h2>
+                    `;
+                deckContainer.appendChild(theDiv);
+            }
 
+            return data;
+            
+        } catch (error) {
+            console.log('Error:', error);
+        }
 
+    };
 
-drawCard.addEventListener('click', function(evt){
- loadCard(evt.deck_id);
+    drawCardBtn.addEventListener('click', function(){
+        if (currentDeckId !== null) {
+            loadCard(currentDeckId);
+            console.log('Drawing card');
+        } else {
+            console.log('No deck loaded');
+        }
+    });
+
+    loadDeck();
+//loadCard();
 });

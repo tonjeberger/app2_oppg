@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="css/style.css" rel="stylesheet">
-    <script src="../uke_4_kortstokk/main.mjs" type="module" crossorigin="anonymous" ></script>
-    <script src="../uke_6_middleware/main.mjs" type="module" crossorigin="anonymous" ></script>
+    <script src="../uke_4_kortstokk/main.mjs" type="module" defer></script>
+    <!-- <script src="../uke_6_middleware/main.mjs" type="module" crossorigin="anonymous" ></script> -->
 </head>
 <body>
 
@@ -15,7 +15,7 @@
         <h1>Deck of cards</h1>
         <button id="shuffleDeckBtn">Shuffle deck</button>
         <button id="drawCardBtn">Draw card</button>
-    </div>
+    </div>  
 
     <br><hr><br>
     
@@ -24,12 +24,12 @@
         <button id="counterBtn">Click me</button>
     </div>
 
-    <div id="sessionCounterContainer"></div>
+    <div id="sessionContainer"></div>
 
     
 
     <script>
-        
+
 
         // const deckContainer = document.getElementById('deck-container');
         // const drawCard = document.getElementById('draw-card');
