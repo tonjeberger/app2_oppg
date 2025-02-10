@@ -148,3 +148,5 @@ init().then(() => {
 
 
 });
+
+export default server;
