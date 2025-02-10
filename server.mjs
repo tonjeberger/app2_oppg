@@ -5,7 +5,9 @@ import {quotes, poem} from './uke_3_dikt_sitat/dikt_sitat.mjs';
 import log from './modules/log.mjs';
 import { LOG_LEVELS, eventLogger } from './modules/log.mjs';
 import {newSessionInfo, printInfo, readSessionInfo, reuseSession} from './modules/saveSessionInfo.mjs';
-
+import treeRouter from './routes/treeAPI.mjs';
+import questLogRouter from './routes/questLogAPI.mjs';
+import userRouter from './routes/userAPI.mjs';
 
 const server = express();
 const port = (process.env.PORT || 8000);
@@ -25,7 +27,9 @@ init().then(() => {
     server.set('port', port);
     server.use(logger); // hver gang det kommer en request så vil log-funksjonen kjøres. om det er noe man ikke vil logge legger man denne under det i koden
     server.use(express.static('public')); // middleware som gjør at vi kan hente filer fra public-mappen
-
+    server.use("/tree", treeRouter); // hvis noe er fulgt av /tree så vil den bruke treeRouter
+    server.use("/quest", questLogRouter); // hvis noe er fulgt av /questLog så vil den bruke questLogRouter
+    server.use("/user", userRouter);
 
     server.use(async(req, res, next) => {
         await printInfo();
