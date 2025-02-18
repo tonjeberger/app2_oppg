@@ -19,5 +19,5 @@ console.log(treeData)
 
 
 //___________start server_________
-const server = await import('./server.mjs');
+const server = await import('../server.mjs');
 // sekundær måte å kjøre serveren på
