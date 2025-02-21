@@ -1,6 +1,6 @@
 // // import { fetchData } from "./fetches.mjs";
 // // import {deckContainer, drawCardBtn, shuffleDeckBtn} from '../public/index.html';
-
+import {newDeck, shuffleDeck, drawCard} from './kortFunksjoner.mjs';
 
 
 
@@ -12,7 +12,7 @@ let url = "http://localhost:8000/temp/deck";
 // let currentDeckId = null;
 let currentDeckId = localStorage.getItem('currentDeckId');
 
-async function loadDeck() {
+    async function loadDeck() {
         console.log('Loading deck');
         if(currentDeckId === null){
         try {
@@ -29,9 +29,9 @@ async function loadDeck() {
             console.log('Deck id:', currentDeckId);
 
             let theDiv = document.createElement('div');
-                theDiv.innerHTML = `
-                    <h2>Your deck id: ${data.deck_id}</h2>
-                    `;
+            theDiv.innerHTML = `
+                <h2>Your deck id: ${data.deck_id}</h2>
+                `;
             deckContainer.appendChild(theDiv);
             return data;
 
@@ -44,14 +44,14 @@ async function loadDeck() {
             theDiv.innerHTML = `
                 <h2>Your deck id: ${currentDeckId}</h2>
             `;
-            deckContainer.appendChild
+            deckContainer.appendChild(theDiv)
         }
     } 
 
     async function loadCard(deck_id){
 
         try {
-            const drawCardUrl = url + '/' + deck_id + '/card';
+            const drawCardUrl = url + "/" + deck_id + "/card";
             let response = await fetch(drawCardUrl);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -59,13 +59,14 @@ async function loadDeck() {
             let data = await response.json();
             console.log(data);
 
-            for(let card of data.deck){
+            // for(let card of data.deck){
                 let theDiv = document.createElement('div');
-                    theDiv.innerHTML = `
-                        <h2>${card.suit} ${card.value}</h2>
-                    `;
+                theDiv.innerHTML = `
+                    <h2>${card.suit} ${card.value}</h2>
+                `;
                 deckContainer.appendChild(theDiv);
-            }
+                console.log('Card:', card);
+            // }
 
             return data;
             
@@ -75,7 +76,8 @@ async function loadDeck() {
 
     };
 
-    drawCardBtn.addEventListener('click', function(){
+    drawCardBtn.addEventListener('click', function(evt){
+        evt.preventDefault();
         if (currentDeckId !== null) {
             loadCard(currentDeckId);
             console.log('Drawing card');
@@ -83,8 +85,7 @@ async function loadDeck() {
             console.log('No deck loaded');
         }
     });
-
+    
     loadDeck();
     //loadCard();
-
 });
