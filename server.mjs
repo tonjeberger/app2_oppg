@@ -17,7 +17,7 @@ const logger = log(LOG_LEVELS.VERBOSE);
  
 let globalSessionInfo = {};
 
-async function init() { //bruker denne slik at 
+async function init() { //bruker denne slik at ikke serveren starter før vi har fått session info
     await reuseSession(true);
         globalSessionInfo = await readSessionInfo();
         console.log('Global Session Info initialized:', globalSessionInfo);
@@ -138,6 +138,7 @@ init().then(() => {
         const deck_id = parseInt(req.params.deck_id);
         const deck = allDecks[deck_id];
         res.json(drawCard(deck_id));
+        console.log(deck[4])
     }); 
 
 

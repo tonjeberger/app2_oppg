@@ -1,17 +1,13 @@
 
-const Tree = function(root) { // dette er en type konstruktør, en klasse
+export const Tree = function(root) { 
     return {root};
 }
 
-// vi vet ikke hvor mange noder vi trenger, så vi lager en funksjon for det
-const Node = function(data, ...connections){
+export const Node = function(data, ...connections){
     return{data, connections:[...connections]}
-} ///... er restoperator og spreadoperator. som parameter i funksjonen betyr det at vi kan ha uendelig mange parametere
-// i returnen betyr det noe litt annet
+}
 
 
-//vi lager disse funksjonene for å gjøre koden mer leselig og forståelig. 
-//om vi hadde skrevet det direkte kunne vi ikke sett med første øyekast hva det faktisk gjør
 export function saveTree(tree){
     return JSON.stringify(tree, null, 3);
 }
@@ -22,5 +18,40 @@ export function inflateTree(data){
 
 
 
+const a1 = Node("A1", 
+                    Node("A11"), 
+                    Node("A12"));
+const a2 = Node("A2", 
+                    Node("A21"));
+const a3 = Node("A3", 
+                    Node("A31"), 
+                    Node("A32"), 
+                    Node("A33"));
+const a = Node("A", a1, a2, a3);
 
-export {Tree, Node}
+const b1 = Node("B1", 
+                    Node("B11"), 
+                    Node("B12"));
+const b2 = Node("B2", 
+                    Node("B21"),
+                    Node("B22"));
+const b = Node("B", b1, b2);
+
+const c1 = Node("C1", 
+                    Node("C11"), 
+                    Node("C12"),
+                    Node("C13"));
+const c2 = Node("C2", 
+                    Node("C21"));
+const c3 = Node("C3", 
+                    Node("C31"), 
+                    Node("C32"));
+const c4 = Node("C4", 
+                    Node("C41"));
+const c = Node("C", c1, c2, c3, c4);
+
+
+const root = new Node("treeRoot",a,b,c);
+export const newTree = new Tree(root);
+
+//console.log(root);
