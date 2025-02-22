@@ -16,4 +16,11 @@ treeRouter.get("/", (req, res, next) => {
     console.log("tree")
 });
 
+treeRouter.post("/", (req, res, next) => {});
+
+treeRouter.put("/", (req, res, next) => {});
+treeRouter.patch("/", (req, res, next) => {});
+
+treeRouter.delete("/", (req, res, next) => {});
+
 export default treeRouter;
