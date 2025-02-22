@@ -4,15 +4,15 @@ import {Tree, Node, newTree, saveTree} from "../data/tree.mjs"
 
 const treeRouter = express.Router();
 
-const tree = Tree(Node(""));
+const tree = Tree(Node(newTree.root.data, newTree.root.connections));
 
-saveTree(newTree);
+//saveTree(newTree);
 
 
 treeRouter.use(express.json());
 
 treeRouter.get("/", (req, res, next) => {
-    res.json(newTree);
+    res.json(tree);
     console.log("tree")
 });
 
