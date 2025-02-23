@@ -28,7 +28,7 @@ treeRouter.put("/", (req, res, next) => {
 treeRouter.patch("/", (req, res, next) => {
     res.send("patch tree");
     //kode for å endre et tre/noder?
-    //vi skal ikke lage en klient, må finne ut hvordan dette skal gjøres5
+    //vi skal ikke lage en klient, må finne ut hvordan dette skal gjøres
 });
 
 treeRouter.delete("/", (req, res, next) => {

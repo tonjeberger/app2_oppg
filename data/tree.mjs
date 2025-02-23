@@ -51,7 +51,7 @@ const c4 = Node("C4",
 const c = Node("C", c1, c2, c3, c4);
 
 
-const root = new Node("treeRoot",a,b,c);
+const root = Node("treeRoot",a,b,c);
 export const newTree = new Tree(root);
 
 //console.log(root);
