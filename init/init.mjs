@@ -4,6 +4,7 @@ import fs from "fs/promises";
 
 
 let dummyTreeData = await fs.readFile("./init/dummy/tree1.json");
+dummyTreeData = JSON.parse(dummyTreeData);
 console.log(dummyTreeData)
 
 // har laget tree.json, må kanskje hente ut den dataen
