@@ -13,7 +13,7 @@ treeRouter.use(express.json());
 
 treeRouter.get("/", (req, res, next) => {
     res.json(newTree);
-    console.log("tree")
+    console.log("tree");
 });
 
 treeRouter.post("/", (req, res, next) => {
@@ -23,7 +23,7 @@ treeRouter.post("/", (req, res, next) => {
 
 treeRouter.put("/", (req, res, next) => {
     res.send("put tree");
-    //kode for å erstatte et tre/noder?
+    // lage en funksjon som kan brukes her for å erstatte et tre/noder?
 });
 treeRouter.patch("/", (req, res, next) => {
     res.send("patch tree");
