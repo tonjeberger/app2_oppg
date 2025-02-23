@@ -16,11 +16,21 @@ treeRouter.get("/", (req, res, next) => {
     console.log("tree")
 });
 
-treeRouter.post("/", (req, res, next) => {});
+treeRouter.post("/", (req, res, next) => {
+   res.send("post tree");
+});
 
-treeRouter.put("/", (req, res, next) => {});
-treeRouter.patch("/", (req, res, next) => {});
 
-treeRouter.delete("/", (req, res, next) => {});
+treeRouter.put("/", (req, res, next) => {
+    //kode for å erstatte et tre/noder?
+});
+treeRouter.patch("/", (req, res, next) => {
+    //kode for å endre et tre/noder?
+    //vi skal ikke lage en klient, må finne ut hvordan dette skal gjøres5
+});
+
+treeRouter.delete("/", (req, res, next) => {
+    //kode for å slette et tre/noder?
+});
 
 export default treeRouter;
