@@ -55,12 +55,12 @@ init().then(() => {
         return quotes[Math.ceil(Math.random() * quotes.length)];
     }
 
+    server.get("/", getRoot);
 
 
 
 
     // dikt/sitat
-    server.get("/", getRoot);
 
     server.get("/tmp/poem", (req, res) => {
         res.send(poem);
