@@ -22,14 +22,17 @@ treeRouter.post("/", (req, res, next) => {
 
 
 treeRouter.put("/", (req, res, next) => {
+    res.send("put tree");
     //kode for å erstatte et tre/noder?
 });
 treeRouter.patch("/", (req, res, next) => {
+    res.send("patch tree");
     //kode for å endre et tre/noder?
     //vi skal ikke lage en klient, må finne ut hvordan dette skal gjøres5
 });
 
 treeRouter.delete("/", (req, res, next) => {
+    res.send("delete tree");
     //kode for å slette et tre/noder?
 });
 
