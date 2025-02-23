@@ -10,10 +10,6 @@ console.log(treeData)
 // slik som over, så kan jeg fjerne den fra tree.mjs?
 // må finne ut hvordan jeg skal koble det til serveren fra denne filen
 
-server.get("/", (req, res) => {
-    res.json(treeData);
-});
-
 //___________start server_________
 const server = await import('../server.mjs');
 // sekundær måte å kjøre serveren på
