@@ -17,6 +17,9 @@ treeRouter.get("/", (req, res, next) => {
 });
 
 treeRouter.post("/", (req, res, next) => {
+    let newNode = Node(req.body.data);
+    newTree.root.connections.push(newNode);
+
    res.send("post tree");
 });
 
