@@ -1,6 +1,7 @@
 import express from 'express';
 
-import {Tree, Node, newTree, saveTree} from "../data/tree.mjs"
+import {Tree, Node, saveTree} from "../data/tree.mjs"
+import {newTree} from "../data/treeStructure.mjs"
 
 const treeRouter = express.Router();
 
@@ -18,6 +19,7 @@ treeRouter.get("/", (req, res, next) => {
 
 treeRouter.post("/", (req, res, next) => {
     let newNode = Node(req.body.data);
+    console.log(newNode);
     newTree.root.connections.push(newNode);
 
    res.send(newTree);
