@@ -9,7 +9,7 @@ import treeRouter from './routes/treeAPI.mjs';
 import questLogRouter from './routes/questLogAPI.mjs';
 import userRouter from './routes/userAPI.mjs';
 
-export const server = express();
+const server = express();
 const port = (process.env.PORT || 8000);
 const ENABLE_LOGGING = false; // denne blir ikke brukt noe sted nå, men denne kan vi sette til false for å ikke logge
 
