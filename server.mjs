@@ -1,4 +1,5 @@
 import express from 'express'
+import session from 'express-session';
 import HTTP_CODES from './utils/httpCodes.mjs';
 import {newDeck, shuffleDeck, drawCard, allDecks} from './uke_4_kortstokk/kortFunksjoner.mjs';
 import {quotes, poem} from './uke_3_dikt_sitat/dikt_sitat.mjs';
@@ -30,6 +31,19 @@ init().then(() => {
     server.use("/tree", treeRouter); // hvis noe er fulgt av /tree så vil den bruke treeRouter
     server.use("/quest", questLogRouter); // hvis noe er fulgt av /questLog så vil den bruke questLogRouter
     server.use("/user", userRouter);
+
+    server.use(session({
+        secret: 'hemmelig_secret',
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: false }
+    }));
+    server.use((req, res, next) => {
+        console.log("Session middleware kjører...");
+        console.log("req.session:", req.session);
+        next();
+    });
+    
 
     server.use(async(req, res, next) => {
         await printInfo();
@@ -84,22 +98,37 @@ init().then(() => {
 
 //------------------- kortstokk -------------------
     
-    server.post('temp/deck', (req, res) => {
-        res.json(newDeck());
-        console.log("post deck")
+    server.post('/temp/deck', (req, res) => {
+        console.log("Before setting deck id", req.session)
+
+        if(req.session.deck_id){
+            console.log("deck id already exists in session")
+            return res.json({deck_id: req.session.deck_id, message: 'Deck already exists'});
+        }
+        let deck = newDeck();
+        req.session.deck_id = deck.deck_id;
+        console.log("After setting deck id", req.session)
+        res.json(deck);
     });
 
     server.get('/temp/deck', (req, res) => {
-        res.json(newDeck());
-        console.log("get deck")
-    });
+        console.log("session GET /temp/deck ", req.session)
+        
+        if(req.session.deck_id && allDecks[req.session.deck_id]){
+            return res.json({deck_id: req.session.deck_id, deck: allDecks[req.session.deck_id]});
+        }
+        console,log("No deck found in session")
+        res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).json({error: 'No deck found'});
+    });  
+    //     res.json(newDeck());
+    //     console.log("get deck")
+    // });
 
 
     server.get('/temp/deck/:deck_id', (req, res) => { 
         const deck_id = parseInt(req.params.deck_id);
         const deck = allDecks[deck_id];
         if(deck){ 
-            
             res.json({ deck_id, deck });
         }    
         else{
