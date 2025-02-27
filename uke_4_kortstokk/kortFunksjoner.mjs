@@ -12,6 +12,10 @@ export function newDeck(){
     });
     let deck_id = Math.floor(Math.random() * 10)// toString(Math.floor(Math.random() * 10));
     allDecks[deck_id] = deck;
+
+    console.log("all decks: " + allDecks);
+    console.log( "deck id= " + deck_id); 
+
     return {deck_id, deck};
 }
 
@@ -24,6 +28,15 @@ export function shuffleDeck(deck_id){
 
 export function drawCard(deck_id){
     const deck = allDecks[deck_id];
-    const randomCard = deck[Math.floor(Math.random() * deck.length)];
-    return randomCard;
+
+    if(deck.length === 0 || !deck){
+        console.log(`Deck ${deck_id} is empty or not found.`);
+        return {error: `Deck ${deck_id} is empty or not found.`};
+    }
+
+    const drawnCard = deck.pop();
+    return drawnCard;
+
+    // const randomCard = deck[Math.floor(Math.random() * deck.length)];
+    // return randomCard;
 }

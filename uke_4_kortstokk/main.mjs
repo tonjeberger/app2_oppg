@@ -12,6 +12,8 @@ const shuffleDeckBtn = document.getElementById('shuffleDeckBtn');
 // const shuffleDeckBtn = document.getElementById('shuffleDeckBtn');
 // let currentDeckId = null;
 let currentDeckId = sessionStorage.getItem('currentDeckId');
+if(currentDeckId){
+    currentDeckId = parseInt(currentDeckId,10)};
 let url = "http://localhost:8000/temp/deck";
 
 async function loadDeck() {
@@ -53,6 +55,8 @@ async function loadDeck() {
     async function loadCard(deck_id){
 
         const drawCardUrl = url + "/" + deck_id + "/card";
+        console.log('Drawing card:', drawCardUrl);
+        console.log('Deck id:', currentDeckId);
         try {
             let response = await fetch(drawCardUrl);
             if (!response.ok) {

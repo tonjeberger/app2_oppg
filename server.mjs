@@ -1,10 +1,10 @@
 import express from 'express'
 import HTTP_CODES from './utils/httpCodes.mjs';
-import {newDeck, shuffleDeck, drawCard} from './uke_4_kortstokk/kortFunksjoner.mjs';
+import {newDeck, shuffleDeck, drawCard, allDecks} from './uke_4_kortstokk/kortFunksjoner.mjs';
 import {quotes, poem} from './uke_3_dikt_sitat/dikt_sitat.mjs';
+import {newSessionInfo, printInfo, readSessionInfo, reuseSession} from './uke_6_middleware/saveSessionInfo.mjs';
 import log from './modules/log.mjs';
 import { LOG_LEVELS, eventLogger } from './modules/log.mjs';
-import {newSessionInfo, printInfo, readSessionInfo, reuseSession} from './uke_6_middleware/saveSessionInfo.mjs';
 import treeRouter from './routes/treeAPI.mjs';
 import questLogRouter from './routes/questLogAPI.mjs';
 import userRouter from './routes/userAPI.mjs';
@@ -137,8 +137,20 @@ init().then(() => {
     server.get('/temp/deck/:deck_id/card', (req, res) => {
         const deck_id = parseInt(req.params.deck_id);
         const deck = allDecks[deck_id];
-        res.json(drawCard(deck_id));
-        console.log(deck[0])
+
+        if(!deck){
+            return res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).json({error: `Deck ${deck_id} not found`});
+        }
+
+        try {
+            const card = drawCard(deck_id);
+            res.json(card);
+            console.log(card)
+        } catch (error) {
+            console.error("error drawing card: ", error)
+            res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).json({error: 'failed to draw card'});
+        }
+
     }); 
 
 
