@@ -60,7 +60,7 @@ init().then(() => {
 
 
 
-    // dikt/sitat
+//------------------- dikt/sitat -------------------
 
     server.get("/tmp/poem", (req, res) => {
         res.send(poem);
@@ -82,7 +82,7 @@ init().then(() => {
 
 
 
-    //kortstokk
+//------------------- kortstokk -------------------
     
     server.post('temp/deck', (req, res) => {
         res.json(newDeck());
@@ -107,7 +107,7 @@ init().then(() => {
         }
     });
 
-    server.patch('temp/deck/shuffle/:deck_id', (req, res) => {
+    server.patch('/temp/deck/shuffle/:deck_id', (req, res) => {
         const deck_id = req.params.deck_id; //parseInt(req.params.deck_id);
         const shuffledDeck = shuffleDeck(deck_id);
         res.json(shuffledDeck);
@@ -122,7 +122,7 @@ init().then(() => {
 
     });
 
-    server.get('temp/deck/shuffle/:deck_id', (req, res) => {
+    server.get('/temp/deck/shuffle/:deck_id', (req, res) => {
         const deck_id = parseInt(req.params.deck_id);
         const deck = allDecks[deck_id];
         if(deck){
@@ -134,11 +134,11 @@ init().then(() => {
         } 
     });
 
-    server.get('temp/deck/:deck_id/card', (req, res) => {
+    server.get('/temp/deck/:deck_id/card', (req, res) => {
         const deck_id = parseInt(req.params.deck_id);
         const deck = allDecks[deck_id];
         res.json(drawCard(deck_id));
-        console.log(deck[4])
+        console.log(deck[0])
     }); 
 
 
