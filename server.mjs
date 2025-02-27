@@ -4,7 +4,7 @@ import {newDeck, shuffleDeck, drawCard} from './uke_4_kortstokk/kortFunksjoner.m
 import {quotes, poem} from './uke_3_dikt_sitat/dikt_sitat.mjs';
 import log from './modules/log.mjs';
 import { LOG_LEVELS, eventLogger } from './modules/log.mjs';
-import {newSessionInfo, printInfo, readSessionInfo, reuseSession} from './modules/saveSessionInfo.mjs';
+import {newSessionInfo, printInfo, readSessionInfo, reuseSession} from './uke_6_middleware/saveSessionInfo.mjs';
 import treeRouter from './routes/treeAPI.mjs';
 import questLogRouter from './routes/questLogAPI.mjs';
 import userRouter from './routes/userAPI.mjs';

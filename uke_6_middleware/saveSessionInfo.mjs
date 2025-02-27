@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 const directory = path.join(__dirname);
 const filename = 'sessionInfo.csv';
-const filepath = path.join(directory, "../sessions", filename);
+const filepath = path.join(directory, "./sessions", filename);
 console.log(filepath);
 
 let sessionInfo = {};
