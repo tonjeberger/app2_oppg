@@ -40,7 +40,7 @@ export function drawCard(deck_id){
         return {error: `Deck ${deck_id} is empty or not found.`};
     }
     const randomCard = deck[Math.floor(Math.random() * deck.length)];
-    deck.splice(randomCard, 1)[0];
+    deck.splice(deck.indexOf(randomCard), 1);
     allDecks[deck_id] = deck;
     return randomCard;
 }

@@ -122,9 +122,7 @@ init().then(() => {
         console,log("No deck found in session")
         res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).json({error: 'No deck found'});
     });  
-    //     res.json(newDeck());
-    //     console.log("get deck")
-    // });
+
 
 
     server.get('/temp/deck/:deck_id', (req, res) => { 
@@ -139,45 +137,13 @@ init().then(() => {
     });
 
     server.patch('/temp/deck/shuffle/:deck_id', (req, res) => {
-        const deck_id = parseInt(req.params.deck_id); //parseInt(req.params.deck_id);
+        const deck_id = parseInt(req.params.deck_id);
         const shuffledDeck = shuffleDeck(deck_id);
         res.json(shuffledDeck);
         console.log(shuffledDeck)
-        // const deck = allDecks[deck_id];
-        // const randomDeck = deck[Math.floor(Math.random() * deck.length)];
-        // res.send(randomDeck);
-
-
-        // må hente kortstokken og bruke Math.random på en måte
-        // for å stokke kortene i den spesifiserte kortstokken basert på deck_id
-
-
     });
 
-    server.get('/temp/deck/shuffle/:deck_id', (req, res) => {
-        const deck_id = parseInt(req.params.deck_id);
-        const deck = allDecks[deck_id];
 
-        if(!deck){
-            return res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).json({error: `Deck ${deck_id} not found`});
-        }
-        try {
-            const shuffled = shuffleDeck(deck_id);
-            res.send(shuffled);
-        } catch (error) {
-            console.error("error shuffling deck: ", error)
-            res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).json({error: 'failed to shuffle deck'});
-            
-        }
-        // if(deck){
-            
-        //     res.json({ deck_id, deck });
-        // }    
-        // else{
-        //     res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send('Deck ' + deck_id + ' not found');
-        // } 
-
-    });
 
     server.get('/temp/deck/:deck_id/card', (req, res) => {
         const deck_id = parseInt(req.params.deck_id);

@@ -1,10 +1,11 @@
-import {newDeck, shuffleDeck, drawCard} from './kortFunksjoner.mjs';
+// import {newDeck, shuffleDeck, drawCard} from './kortFunksjoner.mjs';
 
 
 document.addEventListener('DOMContentLoaded', () => {
     const drawCardBtn = document.getElementById('drawCardBtn');
     const deckContainer = document.getElementById('deckContainer');
     const shuffleDeckBtn = document.getElementById('shuffleDeckBtn');
+    const newDeckBtn = document.getElementById('newDeckBtn');
 
     let cardDiv = document.createElement('div');
     deckContainer.appendChild(cardDiv);
@@ -13,25 +14,26 @@ document.addEventListener('DOMContentLoaded', () => {
     deckContainer.appendChild(deckDiv);
 
     let currentDeckId = null;
+    let currentDeck = [];
 
     let url = "http://localhost:8000/temp/deck";
 
 
 
 
+
+    loadDeck();
+
+//_________________Load deck_______________________
     async function loadDeck() {
-        console.log('Loading deck');
         let response = await fetch(url, {method: "GET"});
 
         if (response.ok) {
             let data = await response.json();
-            console.log("Deck exists: " + data.deck_id);
-            currentDeckId = data.deck_id;
+            currentDeckId = data.deck_id; 
 
             return;
         }
-        
-        console.log('Deck does not exist, creating new deck');
         
         response = await fetch(url, {method: "POST"});
         if (response.ok) {
@@ -40,13 +42,17 @@ document.addEventListener('DOMContentLoaded', () => {
             deckDiv.innerHTML = "";
             if (currentDeckId) {
                 let deck = await loadShuffledDeck(currentDeckId);
+                currentDeck = deck;
                 console.log(deck)
-                for(let i = 0; i < deck.length; i++){
-                    deckDiv.innerHTML += `
-                    <p>${deck[i].value} of ${deck[i].suit}</p>
-                    `;
-                }
-                deckContainer.appendChild(deckDiv);
+
+                updateShownDeck();
+
+                // for(let i = 0; i < deck.length; i++){
+                //     deckDiv.innerHTML += `
+                //     <p>${deck[i].value} of ${deck[i].suit}</p>
+                //     `;
+                // }
+                //deckContainer.appendChild(deckDiv);
     
             }
             
@@ -54,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }; 
 
+//_________________Load shuffled deck_______________________
     async function loadShuffledDeck(deck_id){
         const shuffleDeckUrl= url + "/shuffle/" + deck_id;
         let response = await fetch(shuffleDeckUrl, {method: "PATCH"});
@@ -65,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
         
         
+//_________________Load card_______________________
     async function loadCard(deck_id){
 
         cardDiv.innerHTML = "";
@@ -83,8 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
             </h2>
             `;
 
-            
+        currentDeck = currentDeck.filter(card => !(card.value === data.value && card.suit === data.suit));            
 
+        updateShownDeck();
             
             return data;
             
@@ -93,24 +102,57 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
+//_________________Update shown deck_______________________
+    function updateShownDeck() {
+        deckDiv.innerHTML = "";
+        deckDiv.innerHTML = `<h3>Cards remaining: ${currentDeck.length}</h3><br>`;
+        for (let i = 0; i < currentDeck.length; i++) {
+            deckDiv.innerHTML += `
+            <p>${currentDeck[i].value} of ${currentDeck[i].suit}</p>
+            `;
+        }
+        deckContainer.appendChild(deckDiv);
+    }
 
-    loadDeck();
+
+    
+
+
+
+//_________________Event listeners_______________________
+
+
+    newDeckBtn.addEventListener('click', function(evt){
+        evt.preventDefault();
+        if(currentDeckId){
+            currentDeckId = null;
+            currentDeck = [];
+            deckDiv.innerHTML = "";
+            cardDiv.innerHTML = "";
+        loadDeck();
+        }
+
+    });
+
 
     drawCardBtn.addEventListener('click', function(evt){
         evt.preventDefault();
-        console.log('Drawing card, preventDefault');
         if (currentDeckId) {
             loadCard(currentDeckId);
 
         };
     });
-
+    
     shuffleDeckBtn.addEventListener("click", async function(evt){
         evt.preventDefault();
-        console.log('Shuffling deck, preventDefault');
-        loadDeck();
-        loadShuffledDeck(currentDeckId);
-
+        if (currentDeckId) {
+            // loadCard(currentDeckId);
+            let deck = await loadShuffledDeck(currentDeckId);
+            currentDeck = deck;
+            updateShownDeck();
+    
+        };
     });
+
 
 });
