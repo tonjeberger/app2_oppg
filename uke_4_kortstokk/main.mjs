@@ -17,7 +17,7 @@ let url = "http://localhost:8000/temp/deck";
 
 async function loadDeck() {
     console.log('Loading deck');
-    let response = await fetch(url, {method: "GET", credentials: "include"});
+    let response = await fetch(url, {method: "GET"});
 
     if (response.ok) {
         let data = await response.json();
@@ -29,7 +29,7 @@ async function loadDeck() {
     
     console.log('Deck does not exist, creating new deck');
     
-    response = await fetch(url, {method: "POST", credentials: "include"});
+    response = await fetch(url, {method: "POST"});
     if (response.ok) {
         let data = await response.json();
         currentDeckId = data.deck_id;

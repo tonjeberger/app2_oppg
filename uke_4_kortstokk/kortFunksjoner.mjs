@@ -28,6 +28,7 @@ export function shuffleDeck(deck_id){
 
 export function drawCard(deck_id){
     const deck = allDecks[deck_id];
+    console.log(deck);
 
     if(deck.length === 0 || !deck){
         console.log(`Deck ${deck_id} is empty or not found.`);
