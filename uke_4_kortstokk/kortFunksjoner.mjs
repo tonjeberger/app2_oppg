@@ -34,10 +34,7 @@ export function drawCard(deck_id){
         console.log(`Deck ${deck_id} is empty or not found.`);
         return {error: `Deck ${deck_id} is empty or not found.`};
     }
+    const randomCard = deck[Math.floor(Math.random() * deck.length)];
+    return randomCard;
 
-    const drawnCard = deck.pop();
-    return drawnCard;
-
-    // const randomCard = deck[Math.floor(Math.random() * deck.length)];
-    // return randomCard;
 }
