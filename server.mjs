@@ -57,6 +57,8 @@ init().then(() => {
 
     server.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
         next();
     });
 
@@ -137,9 +139,10 @@ init().then(() => {
     });
 
     server.patch('/temp/deck/shuffle/:deck_id', (req, res) => {
-        const deck_id = req.params.deck_id; //parseInt(req.params.deck_id);
+        const deck_id = parseInt(req.params.deck_id); //parseInt(req.params.deck_id);
         const shuffledDeck = shuffleDeck(deck_id);
         res.json(shuffledDeck);
+        console.log(shuffledDeck)
         // const deck = allDecks[deck_id];
         // const randomDeck = deck[Math.floor(Math.random() * deck.length)];
         // res.send(randomDeck);
@@ -154,13 +157,26 @@ init().then(() => {
     server.get('/temp/deck/shuffle/:deck_id', (req, res) => {
         const deck_id = parseInt(req.params.deck_id);
         const deck = allDecks[deck_id];
-        if(deck){
+
+        if(!deck){
+            return res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).json({error: `Deck ${deck_id} not found`});
+        }
+        try {
+            const shuffled = shuffleDeck(deck_id);
+            res.send(shuffled);
+        } catch (error) {
+            console.error("error shuffling deck: ", error)
+            res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).json({error: 'failed to shuffle deck'});
             
-            res.json({ deck_id, deck });
-        }    
-        else{
-            res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send('Deck ' + deck_id + ' not found');
-        } 
+        }
+        // if(deck){
+            
+        //     res.json({ deck_id, deck });
+        // }    
+        // else{
+        //     res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send('Deck ' + deck_id + ' not found');
+        // } 
+
     });
 
     server.get('/temp/deck/:deck_id/card', (req, res) => {
