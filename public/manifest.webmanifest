@@ -1,6 +1,5 @@
 {
-    "name": "Science app",
-    "short_name": "scapp",
+    "name": "NoteTaker",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#f0f0f0",
