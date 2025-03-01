@@ -39,8 +39,8 @@ init().then(() => {
         cookie: { secure: false }
     }));
     server.use((req, res, next) => {
-        console.log("Session middleware kjører...");
-        console.log("req.session:", req.session);
+        // console.log("Session middleware kjører...");
+        // console.log("req.session:", req.session);
         next();
     });
     
@@ -101,21 +101,16 @@ init().then(() => {
 //------------------- kortstokk -------------------
     
     server.post('/temp/deck', (req, res) => {
-        console.log("Before setting deck id", req.session)
-
         if(req.session.deck_id){
             console.log("deck id already exists in session")
             return res.json({deck_id: req.session.deck_id, message: 'Deck already exists'});
         }
         let deck = newDeck();
         req.session.deck_id = deck.deck_id;
-        console.log("After setting deck id", req.session)
         res.json(deck);
     });
 
     server.get('/temp/deck', (req, res) => {
-        console.log("session GET /temp/deck ", req.session)
-        
         if(req.session.deck_id && allDecks[req.session.deck_id]){
             return res.json({deck_id: req.session.deck_id, deck: allDecks[req.session.deck_id]});
         }
@@ -140,8 +135,7 @@ init().then(() => {
         const deck_id = parseInt(req.params.deck_id);
         const shuffledDeck = shuffleDeck(deck_id);
         res.json(shuffledDeck);
-        console.log(shuffledDeck)
-    });
+    }); 
 
 
 

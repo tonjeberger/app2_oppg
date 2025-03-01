@@ -43,21 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentDeckId) {
                 let deck = await loadShuffledDeck(currentDeckId);
                 currentDeck = deck;
-                console.log(deck)
 
-                updateShownDeck();
-
-                // for(let i = 0; i < deck.length; i++){
-                //     deckDiv.innerHTML += `
-                //     <p>${deck[i].value} of ${deck[i].suit}</p>
-                //     `;
-                // }
-                //deckContainer.appendChild(deckDiv);
+                updateShownDeck(); 
     
             }
-            
         }
-
     }; 
 
 //_________________Load shuffled deck_______________________
@@ -84,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             let data = await response.json();
-            console.log(data);
             cardDiv.innerHTML = `
             <h2>${data.value} of ${data.suit}<br>
             <img src="./playingCards/${data.value}_of_${data.suit}.png" width="100px" height="150px">
@@ -115,9 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    
-
-
 
 //_________________Event listeners_______________________
 
@@ -146,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
     shuffleDeckBtn.addEventListener("click", async function(evt){
         evt.preventDefault();
         if (currentDeckId) {
-            // loadCard(currentDeckId);
             let deck = await loadShuffledDeck(currentDeckId);
             currentDeck = deck;
             updateShownDeck();
