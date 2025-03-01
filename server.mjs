@@ -1,9 +1,7 @@
 import express from 'express'
 import session from 'express-session';
 import HTTP_CODES from './utils/httpCodes.mjs';
-import {newDeck, shuffleDeck, drawCard, allDecks} from './uke_4_kortstokk/kortFunksjoner.mjs';
-import {quotes, poem} from './uke_3_dikt_sitat/dikt_sitat.mjs';
-import {newSessionInfo, printInfo, readSessionInfo, reuseSession} from './uke_6_middleware/saveSessionInfo.mjs';
+import {printInfo, readSessionInfo, reuseSession} from './uke_6_middleware/saveSessionInfo.mjs';
 import log from './modules/log.mjs';
 import { LOG_LEVELS, eventLogger } from './modules/log.mjs';
 import treeRouter from './routes/treeAPI.mjs';
@@ -67,103 +65,8 @@ init().then(() => {
         res.status(HTTP_CODES.SUCCESS.OK).send('Hello World').end();
         console.log("root")
     }
-    function getQuote(){
-        return quotes[Math.ceil(Math.random() * quotes.length)];
-    }
 
     server.get("/", getRoot);
-
-
-
-
-//------------------- dikt/sitat -------------------
-
-    server.get("/tmp/poem", (req, res) => {
-        res.send(poem);
-    })
-
-    server.get("/tmp/quote", (req, res) => {
-        res.send(getQuote());
-    })
-
-    server.post('/tmp/sum/:a/:b', (req, res) => {
-        const a = parseInt(req.params.a);
-        const b = parseInt(req.params.b);
-        const sum = a + b;
-        res.send(sum.toString());
-    });
-    // ser via postman at denne fungerer
-
-
-
-
-
-//------------------- kortstokk -------------------
-    
-    server.post('/temp/deck', (req, res) => {
-        if(req.session.deck_id){
-            console.log("deck id already exists in session")
-            return res.json({deck_id: req.session.deck_id, message: 'Deck already exists'});
-        }
-        let deck = newDeck();
-        req.session.deck_id = deck.deck_id;
-        res.json(deck);
-    });
-
-    server.get('/temp/deck', (req, res) => {
-        if(req.session.deck_id && allDecks[req.session.deck_id]){
-            return res.json({deck_id: req.session.deck_id, deck: allDecks[req.session.deck_id]});
-        }
-        console,log("No deck found in session")
-        res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).json({error: 'No deck found'});
-    });  
-
-
-
-    server.get('/temp/deck/:deck_id', (req, res) => { 
-        const deck_id = parseInt(req.params.deck_id);
-        const deck = allDecks[deck_id];
-        if(deck){ 
-            res.json({ deck_id, deck });
-        }    
-        else{
-            res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send('Deck ' + deck_id + ' not found');
-        }
-    });
-
-    server.patch('/temp/deck/shuffle/:deck_id', (req, res) => {
-        const deck_id = parseInt(req.params.deck_id);
-        const shuffledDeck = shuffleDeck(deck_id);
-        res.json(shuffledDeck);
-    }); 
-
-
-
-    server.get('/temp/deck/:deck_id/card', (req, res) => {
-        const deck_id = parseInt(req.params.deck_id);
-        const deck = allDecks[deck_id];
-
-        if(!deck){
-            return res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).json({error: `Deck ${deck_id} not found`});
-        }
-
-        try {
-            const card = drawCard(deck_id);
-            res.json(card);
-            console.log(card)
-        } catch (error) {
-            console.error("error drawing card: ", error)
-            res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).json({error: 'failed to draw card'});
-        }
-
-    }); 
-
-
-
-    server.listen(server.get('port'), function () {
-        console.log('server running', server.get('port'));
-    });
-
 
 });
 
