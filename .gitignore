@@ -5,4 +5,4 @@ tull/
 # her kan vi legge til mapper og filer som vi ikke vil ha med i git-repoet
 
 #om man ved et uhell pusher noe med sensitive data, gjør repoet private, slett repoet, lokalt gå tilbake ett hakk
-# lag et nytt repo og push på nytt
+# lag et nytt repo og push på nytt. det holder ikke å bare slette det igjen, dataene ligger i historikken
