@@ -1,3 +1,3 @@
-Link til tre på render.com:
+Link til appen via render.com:
 
-https://app2-oppg.onrender.com/tree
+https://app2-oppg.onrender.com
