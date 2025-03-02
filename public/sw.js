@@ -1,4 +1,4 @@
-const cacheID = "scienceV1";
+const cacheID = "notes";
 const contentToCache = [
   "/index.html",
   "/app.mjs",

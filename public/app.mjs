@@ -5,9 +5,16 @@ if ("serviceWorker" in navigator) {
 //navigator -> browser
 //serviceWorker -> en unik bckground worker som kan kjøre i bakgrunnen, kan bare kjøre en SW
 
-import * as noteAPI from "./noteAPI.mjs";
+import * as noteAPI from "../routes/noteAPI.mjs";
 
 
 const noteContainer = document.getElementById("note-container");
 const newNoteBtn = document.getElementById("new-note-btn");
 
+
+newNoteBtn.addEventListener("click", async () => {
+  console.log("New note button clicked");
+  let noteDiv = document.createElement("div");
+    noteDiv.innerHTML += `<h3>New Note here</h3>`;
+    noteContainer.appendChild(noteDiv);
+});
