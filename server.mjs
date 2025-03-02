@@ -26,6 +26,7 @@ init().then(() => {
     server.set('port', port);
     server.use(logger); // hver gang det kommer en request så vil log-funksjonen kjøres. om det er noe man ikke vil logge legger man denne under det i koden
     server.use(express.static('public')); // middleware som gjør at vi kan hente filer fra public-mappen
+    // server.use(express.json()); // middleware som gjør at vi kan hente json fra body
     server.use("/tree", treeRouter); // hvis noe er fulgt av /tree så vil den bruke treeRouter
     server.use("/quest", questLogRouter); // hvis noe er fulgt av /questLog så vil den bruke questLogRouter
     server.use("/user", userRouter);
@@ -59,6 +60,11 @@ init().then(() => {
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
         next();
     });
+
+    // server.get("*.mjs", (req, res, next) => {
+    //     res.type("application/javascript");
+    //     next();
+    // });
 
 
     function getRoot(req, res, next) {
