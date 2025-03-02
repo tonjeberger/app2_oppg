@@ -2,7 +2,7 @@ import {Tree, Node, saveTree} from "../data/tree.mjs"
 //import {console} from "inspector"; // copilot sier at vi ikke trenger denne importen
 import fs from "fs/promises";
 import express from "express";
-import treeRouter from '../routes/treeAPI.mjs';
+import treeRouter from '../routes/lectureRoutes/treeAPI.mjs';
 // import server from ('../server.mjs');
 
 let dummyTreeData = await fs.readFile("./init/dummy/tree1.json");

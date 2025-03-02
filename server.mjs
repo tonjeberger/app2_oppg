@@ -4,9 +4,9 @@ import HTTP_CODES from './utils/httpCodes.mjs';
 import {printInfo, readSessionInfo, reuseSession} from './uke_6_middleware/saveSessionInfo.mjs';
 import log from './modules/log.mjs';
 import { LOG_LEVELS, eventLogger } from './modules/log.mjs';
-import treeRouter from './routes/treeAPI.mjs';
-import questLogRouter from './routes/questLogAPI.mjs';
-import userRouter from './routes/userAPI.mjs';
+import treeRouter from './routes/lectureRoutes/treeAPI.mjs';
+import questLogRouter from './routes/lectureRoutes/questLogAPI.mjs';
+import userRouter from './routes/lectureRoutes/userAPI.mjs';
 
 const server = express();
 const port = (process.env.PORT || 8000);

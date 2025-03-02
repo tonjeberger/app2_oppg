@@ -1,7 +1,7 @@
 import express from 'express';
 
-import {Tree, Node, saveTree} from "../data/tree.mjs"
-import {newTree} from "../data/treeStructure.mjs"
+import {Tree, Node, saveTree} from "../../data/tree.mjs"
+import {newTree} from "../../data/treeStructure.mjs"
 
 const treeRouter = express.Router();
 

@@ -5,3 +5,7 @@ if ("serviceWorker" in navigator) {
 
 //navigator -> browser
 //serviceWorker -> en unik bckground worker som kan kjøre i bakgrunnen, kan bare kjøre en SW
+const noteContainer = document.getElementById("note-container");
+const newNoteBtn = document.getElementById("new-note-btn");
+
+

@@ -6,18 +6,21 @@
     <link rel="manifest" href="manifest.webmanifest">
     <title>Document</title>
     <link href="css/style.css" rel="stylesheet">
+    <script src="app.mjs" type="module"></script> 
 </head>
 <body>
 
     <h1>Notes</h1>
 
-    <form id="note-form">
-        <input type="text" id="note-input" placeholder="Write a note">
-        <button type="submit">Add note</button>
+    <button id="new-note-btn">New note</button>
 
-    <script src="app.mjs" type="module"></script> 
-    <!-- vi har skrevet .mjs på de filene som skal fungere som moduler, men det er bare kosmetisk for å fortelle 
-     oss at det er en modul -->
+    <div id="note-container"></div>
+
+    <!-- <form id="note-form" display="none">
+        <input type="text" id="note-title" placeholder="Title"><br>
+        <textarea id="note-text" placeholder="Your note"></textarea><br>
+        <button type="submit">Add note</button>
+    </form> -->
     
 </body>
 </html>
