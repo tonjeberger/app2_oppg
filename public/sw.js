@@ -30,7 +30,7 @@ self.addEventListener("fetch", (evt) => {// alle nettverkskall går gjennom fetc
     console.log(`[Service Worker] Fetching resource: ${evt.request.url}`);
     if (r) {return r};
     const response = await fetch(evt.request);
-    const cache = await caches.open(cacheName);
+    const cache = await caches.open(cacheID);
     console.log(`[Service Worker] Caching new resource: ${evt.request.url}`);
     cache.put(evt.request, response.clone());
     return response;
