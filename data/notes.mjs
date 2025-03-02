@@ -7,6 +7,17 @@ export const addNote = (title, content) => {
     })
 }
 
+export const getNotes = () => {
+    return notes;
+}
+
+export function saveNotes(){
+    return JSON.stringify(notes, null, 3);
+}
+
+export function inflateNotes(data){
+    return JSON.parse(data);
+};
 
 
 
