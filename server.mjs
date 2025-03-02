@@ -68,6 +68,33 @@ init().then(() => {
 
     server.get("/", getRoot);
 
+
+    server.get("/notes", (req, res) => {
+        res.send('List all notes');
+    });
+
+    server.post("/notes", (req, res) => {
+        //create a new note
+    });
+    
+    server.get("/notes/:id", (req, res) => {
+        //show note with a pecific id
+    });
+
+    server.patch("/notes/:id", (req, res) => {
+        //update note with a specific id
+    });
+
+    server.put("/notes/:id", (req, res) => {
+        //replace note with a specific id
+    });
+
+    server.delete("/notes/:id", (req, res) => {
+        //delete note with a specific id
+    });
+
+
+
     server.listen(server.get('port'), function () {
         console.log('server running', server.get('port'));
     });
