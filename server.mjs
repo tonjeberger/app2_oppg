@@ -75,22 +75,27 @@ init().then(() => {
 
     server.post("/notes", (req, res) => {
         //create a new note
+        console.log("POST /notes");
     });
     
     server.get("/notes/:id", (req, res) => {
         //show note with a pecific id
+        console.log("GET /notes/:id");
     });
 
     server.patch("/notes/:id", (req, res) => {
         //update note with a specific id
+        console.log("PATCH /notes/:id");
     });
 
     server.put("/notes/:id", (req, res) => {
         //replace note with a specific id
+        console.log("PUT /notes/:id");
     });
 
     server.delete("/notes/:id", (req, res) => {
         //delete note with a specific id
+        console.log("DELETE /notes/:id");
     });
 
 

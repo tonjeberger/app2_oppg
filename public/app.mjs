@@ -8,4 +8,3 @@ if ("serviceWorker" in navigator) {
 const noteContainer = document.getElementById("note-container");
 const newNoteBtn = document.getElementById("new-note-btn");
 
-
