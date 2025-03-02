@@ -60,11 +60,6 @@ init().then(() => {
         next();
     });
 
-    // server.get("*.mjs", (req, res, next) => {
-    //     res.type("application/javascript");
-    //     next();
-    // });
-
 
     function getRoot(req, res, next) {
         eventLogger("Noen spurte etter root")
