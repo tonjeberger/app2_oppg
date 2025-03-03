@@ -26,7 +26,8 @@ init().then(() => {
     server.set('port', port);
     server.use(logger); // hver gang det kommer en request så vil log-funksjonen kjøres. om det er noe man ikke vil logge legger man denne under det i koden
     server.use(express.static('public')); // middleware som gjør at vi kan hente filer fra public-mappen
-    // server.use(express.json()); // middleware som gjør at vi kan hente json fra body
+    server.use(express.static('routes'));
+    server.use(express.json()); // middleware som gjør at vi kan hente json fra body
     server.use("/tree", treeRouter); // hvis noe er fulgt av /tree så vil den bruke treeRouter
     server.use("/quest", questLogRouter); // hvis noe er fulgt av /questLog så vil den bruke questLogRouter
     server.use("/user", userRouter);
@@ -37,11 +38,11 @@ init().then(() => {
         saveUninitialized: true,
         cookie: { secure: false }
     }));
-    server.use((req, res, next) => {
-        // console.log("Session middleware kjører...");
-        // console.log("req.session:", req.session);
-        next();
-    });
+    // server.use((req, res, next) => {
+    //     // console.log("Session middleware kjører...");
+    //     // console.log("req.session:", req.session);
+    //     next();
+    // });
     
 
     server.use(async(req, res, next) => {
@@ -61,10 +62,10 @@ init().then(() => {
         next();
     });
 
-    // server.get("*.mjs", (req, res, next) => {
-    //     res.type("application/javascript");
-    //     next();
-    // });
+    server.get("*.mjs", (req, res, next) => {
+        res.type("application/javascript");
+        next();
+    });
 
 
     function getRoot(req, res, next) {
