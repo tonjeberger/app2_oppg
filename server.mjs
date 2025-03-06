@@ -1,10 +1,9 @@
 import express from 'express'
 import session from 'express-session';
 import HTTP_CODES from './utils/httpCodes.mjs';
-// import {printInfo, readSessionInfo, reuseSession} from './uke_6_middleware/saveSessionInfo.mjs';
-// import { writeToJson } from './modules/writeToJson.mjs';
 import log from './modules/log.mjs';
 import { LOG_LEVELS, eventLogger } from './modules/log.mjs';
+import router from './routes/noteRouter.mjs';
 
 const server = express();
 const port = (process.env.PORT || 8000);
@@ -12,43 +11,13 @@ const ENABLE_LOGGING = true; // denne blir ikke brukt noe sted nå, men denne ka
 
 const logger = log(LOG_LEVELS.VERBOSE);
  
-// let globalSessionInfo = {};
 
-// async function init() { //bruker denne slik at ikke serveren starter før vi har fått session info
-//     await reuseSession(true); // velger om vi skal lage ny session for hver request eller gjenbruke den forrige
-//         globalSessionInfo = await readSessionInfo();
-//         console.log('Global Session Info initialized:', globalSessionInfo);
-// }
-
-// init().then(() => {
     server.set('port', port);
     server.use(logger); // hver gang det kommer en request så vil log-funksjonen kjøres. om det er noe man ikke vil logge legger man denne under det i koden
     server.use(express.static('public')); // middleware som gjør at vi kan hente filer fra public-mappen
     
     server.use(express.json()); // middleware som gjør at vi kan hente json fra body
 
-    // server.use(session({
-    //     secret: 'hemmelig_secret',
-    //     resave: false,
-    //     saveUninitialized: true,
-    //     cookie: { secure: false }
-    // }));
-    // server.use((req, res, next) => {
-    //     // console.log("Session middleware kjører...");
-    //     // console.log("req.session:", req.session);
-    //     next();
-    // });
-    
-
-    // server.use(async(req, res, next) => {
-    //     await printInfo();
-    //     next();
-    // });
-
-    // server.use((req, res, next) => {
-    //     req.sessionInfo = globalSessionInfo;
-    //     next();
-    // });
 
     server.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*');
@@ -71,42 +40,9 @@ const logger = log(LOG_LEVELS.VERBOSE);
 
     server.get("/", getRoot);
 
-
-    server.get("/notes", (req, res) => {
-        res.send('List all notes');
-    });
-
-    server.post("/notes", (req, res) => {
-
-        console.log("POST /notes");
-    });
-    
-    server.get("/notes/:id", (req, res) => {
-        //show note with a pecific id
-        console.log("GET /notes/:id");
-    });
-
-    server.patch("/notes/:id", (req, res) => {
-        //update note with a specific id
-        console.log("PATCH /notes/:id");
-    });
-
-    server.put("/notes/:id", (req, res) => {
-        //replace note with a specific id
-        console.log("PUT /notes/:id");
-    });
-
-    server.delete("/notes/:id", (req, res) => {
-        //delete note with a specific id
-        console.log("DELETE /notes/:id");
-    });
-
-
-
     server.listen(server.get('port'), function () {
         console.log('server running', server.get('port'));
     });
 
-// });
 
 export default server;

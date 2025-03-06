@@ -1,11 +1,8 @@
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/sw.js"); // Register the service worker, js-filen. dette er ikke en modul, så den har vi bare kalr .js
-} // kan sees på som ett event som lytter etter en serviceWorker, og når den finner en så registrerer den den
-// import sessionFileStore from "session-file-store";
-//navigator -> browser
-//serviceWorker -> en unik bckground worker som kan kjøre i bakgrunnen, kan bare kjøre en SW
+    navigator.serviceWorker.register("/sw.js"); 
+}
 
-import * as api from "../routes/noteAPI.mjs";
+// import * as api from "../routes/noteAPI.mjs";
 // import {notes} from "../data/notes.mjs";
 
 const notes =[
@@ -37,17 +34,11 @@ const form = `
     
 newNoteBtn.addEventListener("click", async () => {
     console.log("New note button clicked");
-    noteContainer.innerHTML = form;
-    noteContainer.appendChild(noteForm);
-    let note = await api.createNote(formData);
-    noteContainer.appendChild(note);
-
 });
 
 noteForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    console.log(notes);
-    console.log("Note created" + note);
+    console.log("Note created");
 
 });
 
