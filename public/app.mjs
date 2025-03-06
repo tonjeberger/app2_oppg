@@ -2,7 +2,7 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js"); 
 }
 
-// import * as api from "../routes/noteAPI.mjs";
+import * as fetches from "../utils/fetches.mjs";
 // import {notes} from "../data/notes.mjs";
 
 const notes =[
@@ -10,13 +10,13 @@ const notes =[
         id: 1,
         title: 'Note 1',
         date: "02-03-2025",
-        content: 'Content of note 1'
+        note: 'Content of note 1'
     },
     {
         id: 2,
         title: 'Note 2',
         date: "02-03-2025",
-        content: 'Content of note 2'
+        note: 'Content of note 2'
     }
 ];
 
@@ -25,19 +25,27 @@ const newNoteBtn = document.getElementById("new-note-btn");
 const noteForm = document.createElement("form");
 
 const form = `
-    <form id="note-form" display="block">
-        <input type="text" name="title" placeholder="Title"><br>
-        <textarea name="content" rows="15" cols="70" placeholder="Your note"></textarea><br>
-        <input id="add-note" type="submit" value="Add note"></input>
-    </form>`;
+        <form id="note-form" method="post" display="none">
+            <label for="title">Title:</label><br>
+            <input type="text" name="title" required><br>
+            <label for="note">Content:</label><br>
+            <textarea name="note" rows="15" cols="70"></textarea><br>
+            <input id="add-note" type="submit" value="Add note"></input>
+        </form>
+    `;
 
     
-newNoteBtn.addEventListener("click", async () => {
+newNoteBtn.addEventListener("click", async (evt) => {
+    evt.preventDefault();
+    noteContainer.innerHTML = "";
+    noteForm.innerHTML = form;
+    noteContainer.appendChild(noteForm);
+        
     console.log("New note button clicked");
 });
 
-noteForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
+noteForm.addEventListener("submit", async (evt) => {
+    evt.preventDefault();
     console.log("Note created");
 
 });

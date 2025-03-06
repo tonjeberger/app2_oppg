@@ -15,9 +15,8 @@ const logger = log(LOG_LEVELS.VERBOSE);
     server.set('port', port);
     server.use(logger); // hver gang det kommer en request så vil log-funksjonen kjøres. om det er noe man ikke vil logge legger man denne under det i koden
     server.use(express.static('public')); // middleware som gjør at vi kan hente filer fra public-mappen
-    
     server.use(express.json()); // middleware som gjør at vi kan hente json fra body
-
+    server.use(router);
 
     server.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*');
