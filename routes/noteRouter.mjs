@@ -1,4 +1,5 @@
 import express from 'express';
+import { addNote } from '../data/notes.mjs'
 
 const router = express.Router();
 
@@ -11,6 +12,7 @@ router.get("/notes", (req, res) => {
 
 router.post("/notes", (req, res) => {
     // create a new note
+    let note = addNote();
     console.log("POST /notes");
 });
 

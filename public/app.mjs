@@ -2,7 +2,7 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js"); 
 }
 
-import * as fetches from "../utils/fetches.mjs";
+import * as fetches from "../utils/fetchAPI.mjs";
 // import {notes} from "../data/notes.mjs";
 
 const notes =[
@@ -34,7 +34,7 @@ const form = `
         </form>
     `;
 
-    
+// åpne skjema for ny note
 newNoteBtn.addEventListener("click", async (evt) => {
     evt.preventDefault();
     noteContainer.innerHTML = "";
@@ -44,6 +44,7 @@ newNoteBtn.addEventListener("click", async (evt) => {
     console.log("New note button clicked");
 });
 
+// sende inn skjema for ny note
 noteForm.addEventListener("submit", async (evt) => {
     evt.preventDefault();
     console.log("Note created");
