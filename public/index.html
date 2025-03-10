@@ -16,10 +16,18 @@
 
     <div id="note-container"></div>
 
-    <form id="note-form" display="block">
+    <!-- <form id="note-form" display="block">
         <input type="text" id="note-title" placeholder="Title"><br>
         <textarea id="note-text" placeholder="Your note"></textarea><br>
         <input id="add-note" type="submit">Add note</input>
+    </form> -->
+
+    <form id="note-form" method="post" display="none">
+        <label for="title">Title:</label><br>
+        <input type="text" name="title" required><br>
+        <label for="note">Content:</label><br>
+        <textarea name="note" rows="15" cols="70"></textarea><br>
+        <input id="add-note" type="submit" value="Add note"></input>
     </form>
 
     
