@@ -20,6 +20,9 @@ const notes =[
     }
 ];
 
+
+
+//-------------- MÅ ENDRES -----------------
 const noteContainer = document.getElementById("note-container");
 const newNoteBtn = document.getElementById("new-note-btn");
 const noteForm = document.createElement("form");
@@ -33,6 +36,10 @@ const form = `
             <input id="add-note" type="submit" value="Add note"></input>
         </form>
     `;
+
+//-------------------------------------------------------
+
+
 
 // åpne skjema for ny note
 newNoteBtn.addEventListener("click", async (evt) => {
