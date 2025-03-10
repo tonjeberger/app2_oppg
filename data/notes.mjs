@@ -1,6 +1,6 @@
-import NoteStore from "./noteRecordStore.mjs";
+import NoteStore from "./noteStore.mjs";
 
-const ns = new NoteStore();
+const ns = new NoteStore(); // create a new instance of the NoteStore class
 
 export function addNote() {
   console.log('addNote');
