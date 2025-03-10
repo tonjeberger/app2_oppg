@@ -1,0 +1,11 @@
+INSERT INTO public."Note_table"(
+	title, note)
+	VALUES ($2, $3)
+    RETURNING id, title, note;
+
+
+
+Christian sin fra github:
+INSERT INTO "public"."Items"("data", "connections") VALUES($1, $2) RETURNING "id", "data", "connections";
+
+må få inn form-data i values? 

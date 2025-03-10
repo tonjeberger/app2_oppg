@@ -1,16 +1,38 @@
 import NoteStore from "./noteStore.mjs";
 
-const ns = new NoteStore(); // create a new instance of the NoteStore class
+const noteStorageHandler = new NoteStore(); // create a new instance of the NoteStore class
 
-export function addNote() {
-  console.log('addNote');
-    const note = [];
-};
+class Note {
 
-// koble infoen fra formet til denne?
+    constructor(title, noteData) {
+        this.title = title;
+        this.noteData = noteData;
+    }
 
-// infoen fra denne funksjonen sendes tilbake til klient, men må også sendes til en dabaase
+    async create(){
+        const note = await noteStorageHandler.create(this);
+        this.title = note.title;
+        this.noteData = note.noteData;
+        return this;
+    }
 
-export function saveNotes(){
-    ns.save(this);
+    async read(){
+        const note = await noteStorageHandler.read(this);
+        this.title = note.title;
+        this.noteData = note.noteData;
+        return this;
+    }
+
+    async update(){
+        const note = await noteStorageHandler.update(this);
+        this.title = note.title;
+        this.noteData = note.noteData;
+        return this;
+    }
+
+    async purge(){
+        await noteStorageHandler.purge(this);
+        return null;
+    }
+
 }

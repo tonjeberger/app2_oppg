@@ -41,3 +41,12 @@ async function runQuery(statement, ...values){
         client.end(); 
     }
 };
+
+const dbManager = {
+    create,
+    update,
+    read,
+    purge
+};
+
+export default dbManager;

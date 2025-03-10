@@ -1,7 +1,7 @@
 import TemplateManager from "../modules/templateManager.mjs";
 
 // import TemplateManager from "./modules/templateManager.mjs";
-const templateFile = "loginView.html";
+const templateFile = "loginView.html"; // dette skal være path til html-filen
 
 const template = TemplateManager.fetchTemplate(templateFile);
 
