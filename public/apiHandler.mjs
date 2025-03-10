@@ -8,7 +8,6 @@ const HTTP_METHODS = {
 
 const isPROD = false // denne står som false under utviklingsfasen, så kan den endres til true under testing/publisering I guess?
 
-
 const BASE_API_TEST1 = "Test1/";
 const BASE_API_TEST2 = "Test2/";
 const BASE_API_PROD = ""; 
@@ -18,7 +17,7 @@ const BASE_API = (isPROD) ? BASE_API_PROD : BASE_API_TEST1;
 
 const API_ENDPOINTS = {
     GetTree: `${BASE_API}/tree`,
-    DeleteNode: (id) => `/tree/${id}`,
+    DeleteNode: (id) => `${BASE_API}/tree/${id}`,
 }// her legger vi inn alle endpointene vi trenger, så slipper vi å skrive de inn flere steder
 
 async function retrieveUsersTechTree(userID){
@@ -44,3 +43,5 @@ async function runRequest(path, method = HTTP_METHODS.GET, data = null){
     let response = await fetch(path); // dette er egentlig den eneste fetchen vi trenger
     return await response.json();
 }
+
+console.log(`API running ${isPROD ? "PROD" : "test"}`);
