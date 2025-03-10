@@ -25,7 +25,7 @@ export async function newSessionInfo() {
         sessionInfo = {
             token: token,
             sessionStart: date.toISOString().replace("T", " ").substring(0, 16),
-            sessionEnd: null // vil kunne sette en tid på hvor lenge en session skal vare
+            sessionEnd: null // har lyst til å kunne sette en tid på hvor lenge en session skal vare
         };
         await saveSessionInfo(sessionInfo);
     };  
