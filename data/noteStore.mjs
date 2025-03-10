@@ -1,4 +1,4 @@
-import RecordStoreAbstractInterface from "./recordStoreAbstractInterface";
+import RecordStoreAbstractInterface from "./recordStoreAbstractInterface.mjs";
 
 class NoteStore extends RecordStoreAbstractInterface {
 
