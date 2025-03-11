@@ -22,7 +22,7 @@ const API_ENDPOINTS = {
 // de med id er funksjoner slik at de er dynamiske, og kan brukes mens kode kjører
 
 export async function newNote(){
-    const note = await runRequest(API_ENDPOINTS.NewNote(), HTTP_METHODS.POST, {title: "title", content: "content"});
+    const note = await runRequest(API_ENDPOINTS.NewNote(), HTTP_METHODS.POST, {title, content}); // må sette let title og let content til å være det som er i skjemaet
     return note;
 }
 export async function getNote(id){
@@ -30,12 +30,12 @@ export async function getNote(id){
     return note;
 }
 export async function updateNote(id){
-    const note = await runRequest(API_ENDPOINTS.UpdateNote(id));
+    const note = await runRequest(API_ENDPOINTS.UpdateNote(id), HTTP_METHODS.PUT, {title, content});
     return note;
 }
 
 export async function deleteNote(id){
-    const note = await runRequest(API_ENDPOINTS.DeleteNote(id));
+    const note = await runRequest(API_ENDPOINTS.DeleteNote(id), HTTP_METHODS.DELETE);
     return note;
 }
 
