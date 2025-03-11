@@ -26,19 +26,19 @@ async function purge(statement, ...values){
 async function runQuery(statement, ...values){
     const client = new Client(config);
     try {
-        client.connect();
-        const result = client.query(statement, [...values]) // denne vil alltid inneholde et objekt uansett hvilken spørring vi kjører
+        await client.connect();
+        const result = await client.query(statement, [...values]) // denne vil alltid inneholde et objekt uansett hvilken spørring vi kjører
         
         if(result.rowCount <= 0){
             throw new Error("No records created");
         }
-        return result.row[0]; // vi skal lage en instans, derfor returnerer vi den første indeksen
+        return result.rows[0]; // vi skal lage en instans, derfor returnerer vi den første indeksen
 
     } catch (error) {
         console.error(error);
         return null;
     } finally{
-        client.end(); 
+        await client.end(); 
     }
 };
 
