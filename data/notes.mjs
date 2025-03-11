@@ -5,29 +5,29 @@ const noteStorageHandler = new NoteStore(); // create a new instance of the Note
 
 class Note {
 
-    constructor(title, noteData) {
+    constructor(title, content) {
         this.title = title;
-        this.noteData = noteData;
+        this.content = content;
     } // this her er det som blir sendt inn som argumenter til create, read, update og purge
 
     async create(){
         const note = await noteStorageHandler.create(this);
         this.title = note.title;
-        this.noteData = note.noteData;
+        this.content = note.noteData;
         return this;
-    }
+    } 
 
     async read(){
         const note = await noteStorageHandler.read(this);
         this.title = note.title;
-        this.noteData = note.noteData;
+        this.content = note.content;
         return this;
     }
 
     async update(){
         const note = await noteStorageHandler.update(this);
         this.title = note.title;
-        this.noteData = note.noteData;
+        this.content = note.content;
         return this;
     }
 
