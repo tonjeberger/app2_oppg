@@ -9,8 +9,8 @@ function RecordStoreAbstractInterface(){
 }
 
 function create(id){throw new Error("Not implemented")};
-function update(item){throw new Error("Not implemented")};
-function read(item){throw new Error("Not implemented")};
-function purge(item){throw new Error("Not implemented")};
+function update(note){throw new Error("Not implemented")};
+function read(note){throw new Error("Not implemented")};
+function purge(note){throw new Error("Not implemented")};
 
 export default RecordStoreAbstractInterface;

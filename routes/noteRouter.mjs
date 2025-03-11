@@ -1,18 +1,21 @@
 import express from 'express';
-// import { addNote } from '../data/notes.mjs'
+import Note from '../data/notes.mjs'
 
 const router = express.Router();
+
+const note = new Note();
 
 router.use(express.json());
 
 router.get("/notes", (req, res) => {
     // list all notes
     res.send('List all notes');
-});
+}); // dette skal vel egentlig bare være forsiden?
 
 router.post("/notes", (req, res) => {
     // create a new note
-    let note = addNote();
+    note.title = req.body.title; // må få satt title og noteData, dette skal komme fra formet
+    note.noteData = req.body.noteData;
     console.log("POST /notes");
 });
 

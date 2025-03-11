@@ -1,3 +1,4 @@
+import e from "express";
 import NoteStore from "./noteStore.mjs";
 
 const noteStorageHandler = new NoteStore(); // create a new instance of the NoteStore class
@@ -7,7 +8,7 @@ class Note {
     constructor(title, noteData) {
         this.title = title;
         this.noteData = noteData;
-    }
+    } // this her er det som blir sendt inn som argumenter til create, read, update og purge
 
     async create(){
         const note = await noteStorageHandler.create(this);
@@ -36,3 +37,5 @@ class Note {
     }
 
 }
+
+export default Note;
