@@ -21,8 +21,10 @@ const API_ENDPOINTS = {
 }// her legger vi inn alle endpointene vi trenger, så slipper vi å skrive de inn flere steder
 // de med id er funksjoner slik at de er dynamiske, og kan brukes mens kode kjører
 
-export async function newNote(){
-    const note = await runRequest(API_ENDPOINTS.NewNote(), HTTP_METHODS.POST, {title, content}); // må sette let title og let content til å være det som er i skjemaet
+export async function newNote(formData){
+    let title = formData.get("title");
+    let content = formData.get("content");
+    const note = await runRequest(API_ENDPOINTS.NewNote, HTTP_METHODS.POST, {title, content}); // må sette let title og let content til å være det som er i skjemaet
     return note;
 }
 export async function getNote(id){
@@ -47,11 +49,11 @@ async function runRequest(path, method = HTTP_METHODS.GET, data = null){
         }// vi må fortelle serveren at det er json vi sender
     }
 
-    if([HTTP_METHODS.POST, HTTP_METHODS.PUT, HTTP_METHODS.PATCH].any(method)){
+    if ([HTTP_METHODS.POST, HTTP_METHODS.PATCH, HTTP_METHODS.PUT].includes(method)) {
         request.body = JSON.stringify(data);
     }
     
-    let response = await fetch(path); // dette er egentlig den eneste fetchen vi trenger
+    let response = await fetch(path, request); // dette er egentlig den eneste fetchen vi trenger
     return await response.json();
 }
 
