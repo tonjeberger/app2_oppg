@@ -6,7 +6,7 @@ const HTTP_METHODS = {
     PATCH: "PATCH"
 };
 
-const isPROD = false // false: localhost, true: render
+const isPROD = true // false: localhost, true: render
 
 const BASE_API_TEST = "http://localhost:8000";
 const BASE_API_PROD = "https://app2-oppg.onrender.com"; 
