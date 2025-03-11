@@ -2,59 +2,20 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js"); 
 }
 
-import * as fetches from "../utils/fetchAPI.mjs";
-// import {notes} from "../data/notes.mjs";
+import { newNote, getNote, updateNote, deleteNote } from "./apiHandler.mjs";
 
-const notes =[
-    {
-        id: 1,
-        title: 'Note 1',
-        date: "02-03-2025",
-        note: 'Content of note 1'
-    },
-    {
-        id: 2,
-        title: 'Note 2',
-        date: "02-03-2025",
-        note: 'Content of note 2'
-    }
-];
+const noteForm = document.getElementById("note-form")
 
-
-
-//-------------- MÅ ENDRES -----------------
-const noteContainer = document.getElementById("note-container");
-const newNoteBtn = document.getElementById("new-note-btn");
-const noteForm = document.createElement("form");
-
-const form = `
-        <form id="note-form" method="post" display="none">
-            <label for="title">Title:</label><br>
-            <input type="text" name="title" required><br>
-            <label for="note">Content:</label><br>
-            <textarea name="note" rows="15" cols="70"></textarea><br>
-            <input id="add-note" type="submit" value="Add note"></input>
-        </form>
-    `;
-
-//-------------------------------------------------------
-
-
-
-// åpne skjema for ny note
-newNoteBtn.addEventListener("click", async (evt) => {
-    evt.preventDefault();
-    noteContainer.innerHTML = "";
-    noteForm.innerHTML = form;
-    noteContainer.appendChild(noteForm);
-        
-    console.log("New note button clicked");
-});
 
 // sende inn skjema for ny note
 noteForm.addEventListener("submit", async (evt) => {
     evt.preventDefault();
+    const formData = new FormData(noteForm);
+    const note = await newNote(formData);
+    console.log(note);
     console.log("Note created");
-
 });
 
+// når jeg skal hente ut notes må de legges i egne divs med en 
+// egen knapp for å åpne hver note. Siden jeg ikke skal ha html i en js-fil må jeg lage en template
+// for hver note, og bruke dem når en ny note skal legges til.
