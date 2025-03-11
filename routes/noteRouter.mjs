@@ -1,26 +1,30 @@
 import express from 'express';
 import Note from '../data/notes.mjs'
-
+import HTTP_CODES from '../utils/httpCodes.mjs';
 const router = express.Router();
 
-const note = new Note();
 
 router.use(express.json());
 
-router.get("/notes", (req, res) => {
-    // list all notes
-    res.send('List all notes');
-}); // dette skal vel egentlig bare være forsiden?
-
-router.post("/notes", (req, res) => {
-    // create a new note
-    note.title = req.body.title; // må få satt title og noteData, dette skal komme fra formet
-    note.noteData = req.body.noteData;
+// router.get("/notes", (req, res) => {
+    //     // list all notes
+    //     res.send('List all notes');
+    // }); // dette skal vel egentlig bare være forsiden?
+    
+router.post("/notes", async (req, res) => {
+    try {
+        const note = new Note(req.body.title, req.body.content);
+    
+        const newNote = await note.create();
+        res.HTTP_CODES.SUCCESS.OK.json(newNote);
+    } catch (error) {
+        console.error("Error creating note: ", error);
+    }
     console.log("POST /notes");
 });
 
 router.get("/notes/:id", (req, res) => {
-    //show note with a pecific id
+    //show note with a specific id
     console.log("GET /notes/:id");
 });
 
