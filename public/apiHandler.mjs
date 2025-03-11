@@ -6,26 +6,37 @@ const HTTP_METHODS = {
     PATCH: "PATCH"
 };
 
-const isPROD = false // denne står som false under utviklingsfasen, så kan den endres til true under testing/publisering I guess?
+const isPROD = false // false: localhost, true: render
 
-const BASE_API_TEST1 = "Test1/";
-const BASE_API_TEST2 = "Test2/";
-const BASE_API_PROD = ""; 
+const BASE_API_TEST = "http://localhost:8000";
+const BASE_API_PROD = "https://app2-oppg.onrender.com"; 
 
-const BASE_API = (isPROD) ? BASE_API_PROD : BASE_API_TEST1;
-// her kan vi bytte mellom apiene våre ved å endre isPROD til true eller false
+const BASE_API = (isPROD) ? BASE_API_PROD : BASE_API_TEST; // her kan vi bytte mellom apiene våre ved å endre isPROD til true eller false
 
 const API_ENDPOINTS = {
-    GetTree: `${BASE_API}/tree`,
-    DeleteNode: (id) => `${BASE_API}/tree/${id}`,
+    NewNote: `${BASE_API}/notes`,
+    GetNote: (id) => `${BASE_API}/notes/${id}`,
+    UpdateNote: (id) => `${BASE_API}/notes/${id}`,
+    DeleteNote: (id) => `${BASE_API}/notes/${id}`
 }// her legger vi inn alle endpointene vi trenger, så slipper vi å skrive de inn flere steder
+// de med id er funksjoner slik at de er dynamiske, og kan brukes mens kode kjører
 
-async function retrieveUsersTechTree(userID){
-    const tree = await runRequest(API_ENDPOINTS.GetTree)
+export async function newNote(){
+    const note = await runRequest(API_ENDPOINTS.NewNote(), HTTP_METHODS.POST, {title: "title", content: "content"});
+    return note;
+}
+export async function getNote(id){
+    const note = await runRequest(API_ENDPOINTS.GetNote(id));
+    return note;
+}
+export async function updateNote(id){
+    const note = await runRequest(API_ENDPOINTS.UpdateNote(id));
+    return note;
 }
 
-async function deleteTechTreeNode(userID){
-    const tree = await runRequest(API_ENDPOINTS.DeleteNode(nodeID));
+export async function deleteNote(id){
+    const note = await runRequest(API_ENDPOINTS.DeleteNote(id));
+    return note;
 }
 
 async function runRequest(path, method = HTTP_METHODS.GET, data = null){
