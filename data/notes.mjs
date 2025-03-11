@@ -13,7 +13,7 @@ class Note {
     async create(){
         const note = await noteStorageHandler.create(this);
         this.title = note.title;
-        this.content = note.noteData;
+        this.content = note.content;
         return this;
     } 
 
