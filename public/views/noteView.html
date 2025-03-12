@@ -1,7 +1,8 @@
-<form id="note-form" method="post" display="none">
-    <label for="title">Title:</label><br>
-    <input type="text" name="title" required><br>
-    <label for="note">Content:</label><br>
-    <textarea name="note" rows="15" cols="70"></textarea><br>
-    <input id="add-note" type="submit" value="Add note"></input>
-</form>
+<template>
+    <div id="note-container">
+        <h2 id="note-title"></h2> <!-- hente denne med getelementbyid, og bruke noe sånt som innerText = "${title.value}" -->
+        <p id="note-content"></p>
+        <button id="edit-note">Edit note</button>
+        <button id="delete-note">Delete note</button>
+    </div>
+</template>
