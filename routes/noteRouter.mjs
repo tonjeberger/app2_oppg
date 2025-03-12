@@ -6,10 +6,10 @@ const router = express.Router();
 
 router.use(express.json());
 
-// router.get("/notes", (req, res) => {
-    //     // list all notes
-    //     res.send('List all notes');
-    // }); // dette skal vel egentlig bare være forsiden?
+router.get("/", (req, res) => {
+        // list all notes
+        res.send('List all notes');
+    }); // dette skal vel egentlig bare være forsiden?
     
 router.post("/notes", async (req, res) => {
     try {

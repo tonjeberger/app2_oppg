@@ -2,10 +2,22 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js"); 
 }
 
-import { newNote, getNote, updateNote, deleteNote } from "./apiHandler.mjs";
+import { getAllNotes, newNote, getNote, updateNote, deleteNote } from "./apiHandler.mjs";
 
 const noteForm = document.getElementById("note-form")
 const noteContainer = document.getElementById("note-container");
+
+loadNotes();
+
+
+function loadNotes() {
+    const notes = getAllNotes();
+    // for(let note of notes){
+    //     noteContainer.innerHTML += `<div><h2>Title: ${note.title}</h2> <button id="open-note">open note</button></div>`;
+    // }
+    noteContainer.innerHTML += `<div><h2>Title: ${notes.title}</h2> <button id="open-note">open note</button></div>`; // denne skal flyttes til et view
+
+}
 
 
 // sende inn skjema for ny note

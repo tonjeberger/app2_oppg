@@ -27,7 +27,9 @@ DELETE FROM public."Note_table" WHERE id=$1;
 -- fra copilot: The id=$1 part means "find the rows where the id column matches the given value." For instance, if $1 is 10, the query will delete the row where id equals 10.
 
 
+-- SQL hente hele tabellen
 
+SELECT * FROM public."Note_table" ORDER BY id ASC; 
 
 
 

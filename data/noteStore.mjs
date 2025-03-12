@@ -14,6 +14,11 @@ class NoteStore extends RecordStoreAbstractInterface {
         return await dbManager.read(`SELECT id, title, content FROM public."Note_table" WHERE id=$1; `, note.id);
     }
 
+    async readAll(){
+        return await dbManager.read(`SELECT * FROM public."Note_table" ORDER BY id ASC; `);
+    }
+
+
     async update(note){
         return await dbManager.update(`UPDATE public."Note_table" SET title=$1, content=$2 WHERE id=$3 RETURNING id, title, content;`, note.title, note.content, note.id); 
     }

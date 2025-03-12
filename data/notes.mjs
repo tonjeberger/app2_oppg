@@ -24,6 +24,12 @@ class Note {
         return this;
     }
 
+    async readAll(){
+        const notes = await noteStorageHandler.readAll();
+        console.log("notes i readAll: ", notes);
+        return notes;
+    }
+
     async update(){
         const note = await noteStorageHandler.update(this);
         this.title = note.title;
