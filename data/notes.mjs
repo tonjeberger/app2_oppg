@@ -1,4 +1,3 @@
-import e from "express";
 import NoteStore from "./noteStore.mjs";
 
 const noteStorageHandler = new NoteStore(); // create a new instance of the NoteStore class
@@ -14,6 +13,7 @@ class Note {
         const note = await noteStorageHandler.create(this);
         this.title = note.title;
         this.content = note.content;
+        console.log('Note created:', note);
         return this;
     } 
 

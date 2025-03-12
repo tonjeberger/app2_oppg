@@ -6,7 +6,7 @@ const HTTP_METHODS = {
     PATCH: "PATCH"
 };
 
-const isPROD = true // false: localhost, true: render
+const isPROD = false // false: localhost, true: render
 
 const BASE_API_TEST = "http://localhost:8000";
 const BASE_API_PROD = "https://app2-oppg.onrender.com"; 
@@ -24,7 +24,8 @@ const API_ENDPOINTS = {
 export async function newNote(formData){
     let title = formData.get("title");
     let content = formData.get("content");
-    const note = await runRequest(API_ENDPOINTS.NewNote, HTTP_METHODS.POST, {title, content}); // må sette let title og let content til å være det som er i skjemaet
+    const note = await runRequest(API_ENDPOINTS.NewNote, HTTP_METHODS.POST, {title, content});
+    console.log("newNote funksjon i apiHandler.mjs");
     return note;
 }
 export async function getNote(id){

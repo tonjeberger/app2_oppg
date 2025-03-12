@@ -14,7 +14,8 @@ router.use(express.json());
 router.post("/notes", async (req, res) => {
     try {
         const note = new Note(req.body.title, req.body.content);
-    
+    console.log(note, " : instans av Note");
+    // note er et objekt av klassen Note
         const newNote = await note.create();
         res.HTTP_CODES.SUCCESS.OK.json(newNote);
     } catch (error) {
