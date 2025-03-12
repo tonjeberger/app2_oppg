@@ -26,13 +26,6 @@ init().then(() => {
     server.use(express.static('public')); // middleware som gjør at vi kan hente filer fra public-mappen
     server.use(express.json()); // middleware som gjør at vi kan hente json fra body
     server.use(router);
-
-
-    // server.use((req, res, next) => {
-    //     console.log("Session middleware kjører...");
-    //     console.log("req.session:", req.session);
-    //     next();
-    // });
     
 
     server.use(async(req, res, next) => {
