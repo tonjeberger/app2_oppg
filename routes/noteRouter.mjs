@@ -17,7 +17,7 @@ router.post("/notes", async (req, res) => {
     console.log(note, " : instans av Note");
     // note er et objekt av klassen Note
         const newNote = await note.create();
-        res.HTTP_CODES.SUCCESS.OK.json(newNote);
+        res.status(HTTP_CODES.SUCCESS.OK).json(newNote);
     } catch (error) {
         console.error("Error creating note: ", error);
     }
