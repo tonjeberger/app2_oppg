@@ -6,9 +6,20 @@ const router = express.Router();
 
 router.use(express.json());
 
-router.get("/", (req, res) => {
+router.get("/notes", (req, res) => {
         // list all notes
-        res.send('List all notes');
+        try {
+            const notes = new Note();
+            notes.readAll().then((notes) => {
+                console.log("notes i router: ", notes);
+                res.status(HTTP_CODES.SUCCESS.OK).json(notes);
+            });
+            
+        } catch (error) {
+            console.error("Error reading notes: ", error);
+            res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send("Error reading notes");
+        }
+        // res.send(notes);
     }); // dette skal vel egentlig bare være forsiden?
     
 router.post("/notes", async (req, res) => {
