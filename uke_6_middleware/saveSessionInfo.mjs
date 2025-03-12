@@ -12,7 +12,7 @@ console.log(filepath);
 
 let sessionInfo = {};
 
-
+// må ha en middlewarefunksjon, tar i mot req... i newSessionInfo
 export async function newSessionInfo() {
     let date = new Date();
     let token = Math.random().toString(36);
@@ -29,6 +29,8 @@ export async function newSessionInfo() {
         };
         await saveSessionInfo(sessionInfo);
     };  
+    //req.session = sessionInfo;
+    //next();
 };
 
 export async function printInfo() {
