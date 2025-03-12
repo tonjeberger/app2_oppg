@@ -6,7 +6,7 @@ const HTTP_METHODS = {
     PATCH: "PATCH"
 };
 
-const isPROD = false // false: localhost, true: render
+const isPROD = true // false: localhost, true: render
 
 const BASE_API_TEST = "http://localhost:8000";
 const BASE_API_PROD = "https://app2-oppg.onrender.com"; 
@@ -14,6 +14,7 @@ const BASE_API_PROD = "https://app2-oppg.onrender.com";
 const BASE_API = (isPROD) ? BASE_API_PROD : BASE_API_TEST; // her kan vi bytte mellom apiene våre ved å endre isPROD til true eller false
 
 const API_ENDPOINTS = {
+    AllNotes: `${BASE_API}/`,
     NewNote: `${BASE_API}/notes`,
     GetNote: (id) => `${BASE_API}/notes/${id}`,
     UpdateNote: (id) => `${BASE_API}/notes/${id}`,
@@ -27,6 +28,11 @@ export async function newNote(formData){
     const note = await runRequest(API_ENDPOINTS.NewNote, HTTP_METHODS.POST, {title, content});
     console.log("newNote funksjon i apiHandler.mjs");
     return note;
+}
+export async function getAllNotes(){
+    const notes = await runRequest(API_ENDPOINTS.AllNotes);
+    console.log("getAllNotes funksjon i apiHandler.mjs");
+    return notes;
 }
 export async function getNote(id){
     const note = await runRequest(API_ENDPOINTS.GetNote(id));
