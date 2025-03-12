@@ -12,17 +12,47 @@ TemplateManager.fetchTemplate = async (path) => { // funksjon som hører til Tem
 
 }
 
-TemplateManager.cloneTemplate = (template, target) => {
+TemplateManager.cloneTemplate = (template, target, data = {}) => {
     const clone = template.content.cloneNode(true);
     let html = clone.innerHTML;
-
-    for(let key of Object.keys(data)){
-        html = html.replaceAll(RegExp(`/\{\{${key}\}\}/gm`, data[key]));
-    }// må se mer på denne koden når jeg ser forelesningen på nytt
+    console.log("cloneTemplate ", clone);
+    
+    // for(let key of Object.keys(data)){
+    //     // html = html.replaceAll(RegExp(`/\{\{${key}\}\}/gm`, data[key]));
+    //     html = html.replace(new RegExp(`\\{\\{${key}\\}\\}`, 'g'), data[key]);
+    // }// må se mer på denne koden når jeg ser forelesningen på nytt
+    for (let key of Object.keys(data)) {
+        console.log("key ", key);
+        console.log("data ", data);
+        console.log("data[key] ", data[key]);
+        const note = clone.querySelector(`#note-${key}`);
+        if(note){
+            note.textContent = data[key];
+            html = note.textContent;
+        }
+        console.log("note ", note);
+        // html = html.replaceAll(RegExp(`/\{\{${key}\}\}/gm`, data[key]));
+    }
 
     clone.innerHTML = html;
     target.appendChild(clone);
+    console.log("cloneTemplate again ", clone);
     return clone;
 }
 
+// TemplateManager.cloneTemplate = (template, target, data = {}) => {
+//     const clone = template.content.cloneNode(true);
+
+//     // Iterate over the keys in the data object
+//     for (let key of Object.keys(data)) {
+//         // Find the element with the corresponding ID and set its text content
+//         const element = clone.querySelector(`#note-${key}`);
+//         if (element) {
+//             element.textContent = data[key];
+//         }
+//     }
+
+//     target.appendChild(clone);
+//     return clone;
+// }
 export default TemplateManager;
