@@ -51,13 +51,13 @@ init().then(() => {
     });// sjekke opp i denne igjen
 
 
-    function getRoot(req, res, next) {
-        eventLogger("Noen spurte etter root")
-        res.status(HTTP_CODES.SUCCESS.OK).send('Hello World').end();
-        console.log("root")
-    }
+    // function getRoot(req, res, next) {
+    //     eventLogger("Noen spurte etter root")
+    //     res.status(HTTP_CODES.SUCCESS.OK).send('Hello World').end();
+    //     console.log("root")
+    // }
 
-    server.get("/", getRoot);
+    // server.get("/", getRoot);
 
     server.listen(server.get('port'), function () {
         console.log('server running', server.get('port'));
