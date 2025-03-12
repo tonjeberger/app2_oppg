@@ -3,20 +3,23 @@ if ("serviceWorker" in navigator) {
 }
 
 import { getAllNotes, newNote, getNote, updateNote, deleteNote } from "./apiHandler.mjs";
+import showNoteView from "./controller/noteView.mjs";
 
 const noteForm = document.getElementById("note-form")
 const noteContainer = document.getElementById("note-container");
+// noteContainer.innerHTML = "";
 
+
+// document.body.append(showNoteView(4));
 loadNotes();
-
-
-function loadNotes() {
-    const notes = getAllNotes();
+async function loadNotes() {
+    const notes = await getAllNotes();
+    // listNotesController.view(notes);
     // for(let note of notes){
     //     noteContainer.innerHTML += `<div><h2>Title: ${note.title}</h2> <button id="open-note">open note</button></div>`;
     // }
-    noteContainer.innerHTML += `<div><h2>Title: ${notes.title}</h2> <button id="open-note">open note</button></div>`; // denne skal flyttes til et view
-
+    console.log(notes);
+    // noteContainer.innerHTML += `<div><h2>Title: ${notes.title}</h2> <button id="open-note">open note</button></div>`; // denne skal flyttes til et view
 }
 
 
@@ -25,9 +28,7 @@ noteForm.addEventListener("submit", async (evt) => {
     evt.preventDefault();
     const formData = new FormData(noteForm);
     const note = await newNote(formData);
-    let date = new Date();
-    date = date.toISOString();
-    noteContainer.innerHTML += `<div><h2>Title: ${note.title}</h2> <button id="open-note">open note</button></div>`; // denne skal flyttes til et view
+    // noteContainer.innerHTML += `<div><h2>Title: ${note.title}</h2> <button id="open-note">open note</button></div>`; // denne skal flyttes til et view
     console.log(note);
     console.log("Note created");
 });
