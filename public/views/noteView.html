@@ -1,8 +1,16 @@
 <template>
-    <div id="note-container">
-        <h2 id="note-title"></h2> <!-- hente denne med getelementbyid, og bruke noe sånt som innerText = "${title.value}" -->
-        <p id="note-content"></p>
-        <button id="edit-note">Edit note</button>
-        <button id="delete-note">Delete note</button>
-    </div>
+    <h3 id="note-title"></h3>
+    <p id="note-content"></p>
+    <button id="edit-note-button" style="display: block">Edit note</button>
+    <button id="delete-note-button" style="display: block" >Delete note</button>
+
+    <form id="edit-note-form" style="display: none">
+        <input type="hidden" name="note-id" required>
+        <label for="edit-title">Title:</label><br>
+        <input type="text" id="edit-title" name="edit-title" required><br>
+        <label for="edit-content">Content:</label><br>
+        <textarea id="edit-content" name="edit-content" rows="15" cols="70"></textarea><br>
+        <input id="edit-note-submit" type="submit" value="Edit note"></input>
+    </form>
+
 </template>
