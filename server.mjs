@@ -1,6 +1,4 @@
 import express from 'express'
-// import session from 'express-session';
-import HTTP_CODES from './utils/httpCodes.mjs';
 import log from './modules/log.mjs';
 import { LOG_LEVELS, eventLogger } from './modules/log.mjs';
 import {printInfo, readSessionInfo, reuseSession} from './uke_6_middleware/saveSessionInfo.mjs';
@@ -50,14 +48,6 @@ init().then(() => {
         next();
     });// sjekke opp i denne igjen
 
-
-    // function getRoot(req, res, next) {
-    //     eventLogger("Noen spurte etter root")
-    //     res.status(HTTP_CODES.SUCCESS.OK).send('Hello World').end();
-    //     console.log("root")
-    // }
-
-    // server.get("/", getRoot);
 
     server.listen(server.get('port'), function () {
         console.log('server running', server.get('port'));
