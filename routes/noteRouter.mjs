@@ -6,14 +6,19 @@ const router = express.Router();
 
 router.use(express.json());
 
-router.get("/notes", (req, res) => {
+router.get("/notes", async (req, res) => {
         // list all notes
         try {
             const notes = new Note();
-            notes.readAll().then((notes) => {
-                console.log("notes i router: ", notes);
-                res.status(HTTP_CODES.SUCCESS.OK).json(notes);
-            });
+            const allNotes = await notes.readAll();
+            console.log("allNotes: ", allNotes);
+            if(allNotes.length === 0){
+                res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send("No notes found");
+            }
+            console.log("notes i router: ", allNotes);
+             
+            res.status(HTTP_CODES.SUCCESS.OK).json(allNotes);
+            
             
         } catch (error) {
             console.error("Error reading notes: ", error);
@@ -21,6 +26,8 @@ router.get("/notes", (req, res) => {
         }
         // res.send(notes);
     }); // dette skal vel egentlig bare være forsiden?
+
+
     
 router.post("/notes", async (req, res) => {
     try {
@@ -35,22 +42,22 @@ router.post("/notes", async (req, res) => {
     console.log("POST /notes");
 });
 
-router.get("/notes/:id", (req, res) => {
+router.get("/notes/:id", async (req, res) => {
     //show note with a specific id
     console.log("GET /notes/:id");
 });
 
-router.patch("/notes/:id", (req, res) => {
+router.patch("/notes/:id", async (req, res) => {
     //update note with a specific id
     console.log("PATCH /notes/:id");
 });
 
-router.put("/notes/:id", (req, res) => {
+router.put("/notes/:id", async (req, res) => {
     //replace note with a specific id
     console.log("PUT /notes/:id");
 });
 
-router.delete("/notes/:id", (req, res) => {
+router.delete("/notes/:id", async (req, res) => {
     //delete note with a specific id
     console.log("DELETE /notes/:id");
 });
