@@ -19,35 +19,64 @@ const API_ENDPOINTS = {
     GetNote: (id) => `${BASE_API}/notes/${id}`,
     UpdateNote: (id) => `${BASE_API}/notes/${id}`,
     DeleteNote: (id) => `${BASE_API}/notes/${id}`
-}// her legger vi inn alle endpointene vi trenger, så slipper vi å skrive de inn flere steder
-// de med id er funksjoner slik at de er dynamiske, og kan brukes mens kode kjører
-
+}
 export async function newNote(formData){
-    let title = formData.get("title");
-    let content = formData.get("content");
-    const note = await runRequest(API_ENDPOINTS.NewNote, HTTP_METHODS.POST, {title, content});
-    console.log("newNote funksjon i apiHandler.mjs");
-    return note;
+    try {
+        let title = formData.get("title");
+        let content = formData.get("content");
+        const note = await runRequest(API_ENDPOINTS.NewNote, HTTP_METHODS.POST, {title, content});
+        console.log("newNote funksjon i apiHandler.mjs");
+        return note;
+        
+    } catch (error) {
+        console.error("Error creating note", error);
+    }
 }
 export async function getAllNotes(){
-    const notes = await runRequest(API_ENDPOINTS.AllNotes);
-    // console.log(notes);
-    console.log("getAllNotes funksjon i apiHandler.mjs");
-    return notes;
+    try {
+        const notes = await runRequest(API_ENDPOINTS.AllNotes);
+        console.log("getAllNotes funksjon i apiHandler.mjs");
+        return notes;
+        
+    } catch (error) {
+        console.error("Error getting all notes", error);
+    
+    }
 }
 export async function getNote(id){
-    const note = await runRequest(API_ENDPOINTS.GetNote(id));
-    console.log("getNote funksjon i apiHandler.mjs");
-    return note;
+    try {
+        const note = await runRequest(API_ENDPOINTS.GetNote(id));
+        console.log("getNote funksjon i apiHandler.mjs");
+        return note;
+        
+    } catch (error) {
+        console.error("Error getting note", error);
+        
+    }
 }
-export async function updateNote(id){
-    const note = await runRequest(API_ENDPOINTS.UpdateNote(id), HTTP_METHODS.PUT, {title, content});
-    return note;
+export async function updateNote(id, formData){ // copilot mener jeg skal ha med title og content her og
+    try {
+        let title = formData.get("edit-title");
+        let content = formData.get("edit-content");
+        console.log("title: ", title, "content: ", content, "id: ", id);
+        const note = await runRequest(API_ENDPOINTS.UpdateNote(id), HTTP_METHODS.PUT, {title, content});
+        return note;
+        
+    } catch (error) {
+        console.error("Error updating note", error);
+        
+    }
 }
 
 export async function deleteNote(id){
-    const note = await runRequest(API_ENDPOINTS.DeleteNote(id), HTTP_METHODS.DELETE);
-    return note;
+    try {
+        const response = await runRequest(API_ENDPOINTS.DeleteNote(id), HTTP_METHODS.DELETE);
+        console.log(response, "deletenote function api")
+        return response;
+    } catch (error) {
+        console.error("Error deleting note", error);
+        throw error;
+    }
 }
 
 async function runRequest(path, method = HTTP_METHODS.GET, data = null){
@@ -61,9 +90,10 @@ async function runRequest(path, method = HTTP_METHODS.GET, data = null){
     if ([HTTP_METHODS.POST, HTTP_METHODS.PATCH, HTTP_METHODS.PUT].includes(method)) {
         request.body = JSON.stringify(data);
     }
-    
+
     let response = await fetch(path, request); // dette er egentlig den eneste fetchen vi trenger
     console.log(response);
+    
     return await response.json();
 }
 
