@@ -33,7 +33,7 @@ async function runQuery(statement, ...values){
         await client.connect();
         console.log("client connected");
         const result = await client.query(statement, values) // denne vil alltid inneholde et objekt uansett hvilken spørring vi kjører
-        console.log(result + "result after client.query");
+        // console.log(result + "result after client.query");
         
         if(result.rowCount <= 0){
             throw new Error("No records created");
