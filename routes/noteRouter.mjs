@@ -11,11 +11,11 @@ router.get("/notes", async (req, res) => {
         try {
             const notes = new Note();
             const allNotes = await notes.readAll();
-            console.log("allNotes: ", allNotes);
+            // console.log("allNotes: ", allNotes);
             if(allNotes.length === 0){
                 res.status(HTTP_CODES.CLIENT_ERROR.NOT_FOUND).send("No notes found");
             }
-            console.log("notes i router: ", allNotes);
+            // console.log("notes i router: ", allNotes);
              
             res.status(HTTP_CODES.SUCCESS.OK).json(allNotes);
             
@@ -32,8 +32,7 @@ router.get("/notes", async (req, res) => {
 router.post("/notes", async (req, res) => {
     try {
         const note = new Note(req.body.title, req.body.content);
-    console.log(note, " : instans av Note");
-    // note er et objekt av klassen Note
+        console.log(note, " : instans av Note");
         const newNote = await note.create();
         res.status(HTTP_CODES.SUCCESS.OK).json(newNote);
     } catch (error) {
@@ -45,21 +44,47 @@ router.post("/notes", async (req, res) => {
 router.get("/notes/:id", async (req, res) => {
     //show note with a specific id
     console.log("GET /notes/:id");
+    try {
+        const note = new Note();
+        note.id = req.params.id;
+        const noteToShow = await note.read();
+        console.log("noteToShow: ", noteToShow);
+
+        res.status(HTTP_CODES.SUCCESS.OK).json(noteToShow);
+    } catch (error) {
+        console.error("Error reading note: ", error);
+        
+    }
 });
 
-router.patch("/notes/:id", async (req, res) => {
-    //update note with a specific id
-    console.log("PATCH /notes/:id");
-});
 
 router.put("/notes/:id", async (req, res) => {
     //replace note with a specific id
     console.log("PUT /notes/:id");
+    try {
+        const note = new Note(req.body.title, req.body.content);
+        note.id = req.params.id;
+        const noteToEdit = await note.update();
+        console.log("noteToShow: ", noteToEdit);
+
+        res.status(HTTP_CODES.SUCCESS.OK).json(noteToEdit);
+    } catch (error) {
+        console.error("Error reading note: ", error);
+        
+    }
 });
 
 router.delete("/notes/:id", async (req, res) => {
     //delete note with a specific id
     console.log("DELETE /notes/:id");
+    try {
+        const note = new Note();
+        note.id = req.params.id;
+        await note.purge();
+        res.status(HTTP_CODES.SUCCESS.OK).json({success: true});
+    } catch (error) {
+        console.error("Error deleting note: ", error);
+    }
 });
 
 export default router;
