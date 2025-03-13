@@ -6,34 +6,58 @@ import { getAllNotes, newNote, getNote, updateNote, deleteNote } from "./apiHand
 import showNoteView from "./controller/noteView.mjs";
 
 const noteForm = document.getElementById("note-form")
+const allNotesContainer = document.getElementById("all-notes-container");
 const noteContainer = document.getElementById("note-container");
-// noteContainer.innerHTML = "";
+const noteFormDiv = document.getElementById("note-form-div");
+//må tømme formdiven for å vise enkeltnotatet i shownoteview?
 
 
-document.body.append(showNoteView(4)); //her må også id-en settes basert på hvilken note som skal åpnes
+// document.body.append(oneNote); //her må også id-en settes basert på hvilken note som skal åpnes
 loadNotes();
-async function loadNotes() {
-    const notes = await getAllNotes();
-    // listNotesController.view(notes);
-    for(let note of notes){
-        noteContainer.innerHTML += `<div><h2>Title: ${note.title}</h2> <button id="open-note">open note</button><hr></div>`;
-        // ha en querySelector for knappen her? og en eventlistener som åpner neste view
+export async function loadNotes() {
+    noteFormDiv.style.display = "block";
+    try{
+        const allNotes = await getAllNotes();
+        allNotesContainer.innerHTML = "";
+        noteContainer.innerHTML = "";
+        let notes;
+
+        if (Array.isArray(allNotes)) {
+            notes = allNotes;
+        } else {
+            notes = [allNotes];
+        }
         
+        for(let note of notes){
+            allNotesContainer.innerHTML += `<div><h2>Title: ${note.title}</h2> <button class="open-note-button">Open note</button><hr></div>`;
+            
+        }
+        let openNoteButton = allNotesContainer.querySelectorAll(".open-note-button")
+        for (let i = 0; i < notes.length; i++){
+            openNoteButton[i].addEventListener("click", async () => {
+                const note = notes[i];
+                console.log("note ", note);
+                await showNoteView(note.id);
+            });
+        };
+    } catch (error) {
+        console.error("Error loading notes", error);
     }
-    // console.log("loadNotes-funksjon i app ",notes);
-    // noteContainer.innerHTML += `<div><h2>Title: ${notes.title}</h2> <button id="open-note">open note</button></div>`; // denne skal flyttes til et view
 
 }
-
 
 // sende inn skjema for ny note
 noteForm.addEventListener("submit", async (evt) => {
     evt.preventDefault();
-    const formData = new FormData(noteForm);
-    const note = await newNote(formData);
-    // noteContainer.innerHTML += `<div><h2>Title: ${note.title}</h2> <button id="open-note">open note</button></div>`; // denne skal flyttes til et view
-    console.log(note);
-    console.log("Note created");
+    try {
+        const formData = new FormData(noteForm);
+        const note = await newNote(formData);
+        console.log(note);
+        console.log("Note created");
+        noteForm.reset()
+    } catch (error) {
+        console.error("Error creating note", error);
+    }
 });
 
 // når jeg skal hente ut notes må de legges i egne divs med en 
