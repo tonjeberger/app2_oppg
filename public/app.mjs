@@ -27,7 +27,8 @@ export async function loadNotes() {
         } else {
             notes = [allNotes];
         }
-        
+
+
         for(let note of notes){
             allNotesContainer.innerHTML += `<div><h2>Title: ${note.title}</h2> <button class="open-note-button">Open note</button><hr></div>`;
             
@@ -55,6 +56,7 @@ noteForm.addEventListener("submit", async (evt) => {
         console.log(note);
         console.log("Note created");
         noteForm.reset()
+        loadNotes();
     } catch (error) {
         console.error("Error creating note", error);
     }
