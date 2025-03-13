@@ -10,16 +10,19 @@ const noteContainer = document.getElementById("note-container");
 // noteContainer.innerHTML = "";
 
 
-// document.body.append(showNoteView(4));
+document.body.append(showNoteView(4)); //her må også id-en settes basert på hvilken note som skal åpnes
 loadNotes();
 async function loadNotes() {
     const notes = await getAllNotes();
     // listNotesController.view(notes);
-    // for(let note of notes){
-    //     noteContainer.innerHTML += `<div><h2>Title: ${note.title}</h2> <button id="open-note">open note</button></div>`;
-    // }
-    console.log(notes);
+    for(let note of notes){
+        noteContainer.innerHTML += `<div><h2>Title: ${note.title}</h2> <button id="open-note">open note</button><hr></div>`;
+        // ha en querySelector for knappen her? og en eventlistener som åpner neste view
+        
+    }
+    // console.log("loadNotes-funksjon i app ",notes);
     // noteContainer.innerHTML += `<div><h2>Title: ${notes.title}</h2> <button id="open-note">open note</button></div>`; // denne skal flyttes til et view
+
 }
 
 
