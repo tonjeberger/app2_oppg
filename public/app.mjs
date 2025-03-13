@@ -2,7 +2,7 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js"); 
 }
 
-import { getAllNotes, newNote, getNote, updateNote, deleteNote } from "./apiHandler.mjs";
+import { getAllNotes, newNote } from "./apiHandler.mjs";
 import showNoteView from "./controller/noteView.mjs";
 
 const noteForm = document.getElementById("note-form")
