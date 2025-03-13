@@ -21,7 +21,7 @@ self.addEventListener("fetch", (evt) => {// alle nettverkskall går gjennom fetc
   if(!(
     evt.request.url.startsWith("http:") ||
     evt.request.url.startsWith("https:")
-  ))
+  ) || evt.request.method !== "GET")
   {return;
 
   };
