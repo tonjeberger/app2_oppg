@@ -19,19 +19,22 @@ class Note {
 
     async read(){
         const note = await noteStorageHandler.read(this);
+        this.id = note.id;
         this.title = note.title;
         this.content = note.content;
+        console.log("read note")                                                    
         return this;
     }
 
     async readAll(){
         const notes = await noteStorageHandler.readAll();
-        console.log("notes i readAll: ", notes);
+        // console.log("notes i readAll: ", notes);
         return notes;
     }
 
     async update(){
         const note = await noteStorageHandler.update(this);
+        console.log('Note updated:', note);
         this.title = note.title;
         this.content = note.content;
         return this;
@@ -42,6 +45,6 @@ class Note {
         return null;
     }
 
-}
+} 
 
 export default Note;

@@ -20,7 +20,7 @@ class NoteStore extends RecordStoreAbstractInterface {
 
 
     async update(note){
-        return await dbManager.update(`UPDATE public."Note_table" SET title=$1, content=$2 WHERE id=$3 RETURNING id, title, content;`, note.title, note.content, note.id); 
+        return await dbManager.update(`UPDATE public."Note_table" SET title=$1, content=$2 WHERE id=$3 RETURNING title, content, id;`, note.title, note.content, note.id); 
     }
 
     async purge(note){
