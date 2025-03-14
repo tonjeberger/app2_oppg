@@ -33,7 +33,9 @@ async function printInfo() {
 
 
 async function saveSessionInfo(newInfo) {
-    newInfo = `${newInfo.token},${newInfo.sessionStart},${newInfo.sessionEnd}\n`;
+    newInfo = 
+    `Session: ${newInfo.token}, session start: ${newInfo.sessionStart}\n`; //,${newInfo.sessionEnd} om jeg får det til senere
+    
     try {
         await fs.appendFile(filepath, newInfo); 
         console.log("Saved session info");
@@ -73,11 +75,11 @@ async function reuseSession(reuse = true){
     if (Object.keys(sessionInfo).length === 0 || !reuse || !sessionInfo){
         let date = new Date();
         let token = Math.random().toString(36);
-        
+       // .toISOString().replace("T", " ").substring(0, 16),
         sessionInfo = {
             token: token,
-            sessionStart: date.toISOString().replace("T", " ").substring(0, 16),
-            sessionEnd: null // mulig å kunne registrere når sessionen slutter/skal slutte?
+            sessionStart: date.toLocaleString("no-NO"), 
+            sessionEnd: null // mulig å senere kunne registrere når sessionen slutter/skal slutte?
         };
         await saveSessionInfo(sessionInfo);
     }; 
