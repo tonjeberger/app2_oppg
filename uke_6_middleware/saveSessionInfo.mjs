@@ -13,14 +13,11 @@ console.log(filepath);
 let sessionInfo = {};
 
 // må ha en middlewarefunksjon, tar i mot req... i newSessionInfo
-export async function newSessionInfo() {
+export async function newSessionInfo(req, res, next) {
     let date = new Date();
     let token = Math.random().toString(36);
 
     if (Object.keys(sessionInfo).length === 0 ){
-        // let sessionStart = date.toISOString().replace("T", " ").substring(0, 16);
-        // let endDate = new Date(date.getTime() + 2 * 60 * 60 * 1000);
-        // let sessionEnd = endDate.toISOString().replace("T", " ").substring(0, 16);
         
         sessionInfo = {
             token: token,
@@ -29,17 +26,15 @@ export async function newSessionInfo() {
         };
         await saveSessionInfo(sessionInfo);
     };  
-    //req.session = sessionInfo;
-    //next();
-};
+    if(req){
+        req.sessionInfo = sessionInfo;
+    }
+    next();
+}; 
 
 export async function printInfo() {
     console.log(sessionInfo);
-    // await saveSessionInfo(sessionInfo); // denne er flyttet opp i newSessionInfo
 };
-
-// må ha en test her noe sted for å sjekke på om det skal lagres ny sessioninfo,
-// eller om den forrige skal gjenbrukes
 
 
 async function saveSessionInfo(newInfo) {
@@ -73,16 +68,6 @@ export async function readSessionInfo() {
 
         console.log(sessionInfo);
 }
-
-
-// tenkte å lage en funksjon for når en session skulle avsluttes eller oppdateres
-export async function endSession(){
-    // let date = new Date();
-    // sessionInfo.sessionEnd = date.toISOString().replace("T", " ").substring(0, 16);
-    // await saveSessionInfo(sessionInfo);
-    // console.log("Session ended");
-    // newSessionInfo();
-}; 
 
 
 export async function reuseSession(reuse = true){ // om vi vil bruke den forrige sessionen setter man true der funksjonen brukes
