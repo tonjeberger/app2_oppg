@@ -1,19 +1,17 @@
 import TemplateManager from "../modules/templateManager.mjs";
 import { getNote, deleteNote, updateNote } from "../apiHandler.mjs";
 
-const templateFile = "./views/noteView.html"; // dette skal være path til html-filen
+const templateFile = "./views/noteView.html";
 
 const template = await TemplateManager.fetchTemplate(templateFile);
 
 const allNotesContainer = document.getElementById("all-notes-container");
 const noteContainer = document.getElementById("note-container");
 const noteFormDiv = document.getElementById("note-form-div");
-// skal legge ved data i app.mjs?
 
 async function showNoteView(id){
     try {
         const noteData = await getNote(id);
-        console.log("shownoteview ", noteData);
         allNotesContainer.innerHTML = "";
         noteContainer.innerHTML = "";
         noteFormDiv.style.display = "none";
@@ -21,7 +19,6 @@ async function showNoteView(id){
         const showNote = TemplateManager.cloneTemplate(template, noteContainer, {id, title: noteData.title, content: noteData.content});
         
         if(showNote){
-            console.log("title: ", showNote);
 
             const titleElement = showNote.querySelector("#note-title");
             const contentElement = showNote.querySelector("#note-content");
@@ -35,9 +32,7 @@ async function showNoteView(id){
             const deleteNoteButton = showNote.querySelector("#delete-note-button");
         
             if(editNoteButton){
-                console.log("editNoteButton ", editNoteButton);
                 editNoteButton.addEventListener("click", async () => {
-                    console.log("klikk")
                     const editTitle = showNote.querySelector("#edit-title");
                     const editContent = showNote.querySelector("#edit-content");
                     const editNoteForm = showNote.querySelector("#edit-note-form");
@@ -54,6 +49,7 @@ async function showNoteView(id){
                         const formData = new FormData(editNoteForm);
                         try {
                             await updateNote(noteData.id, formData);
+                            console.log("note updated");
                             window.location.replace("/");
                         } catch (error) {
                             console.error("Error updating note", error);

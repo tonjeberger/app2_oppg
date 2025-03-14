@@ -23,13 +23,9 @@ export async function sessionMiddleware(req, res, next) {
     if(req){
         req.sessionInfo = sessionInfo;
     }
-    printInfo();
+    console.log(sessionInfo);
     next();
 }; 
-
-async function printInfo() {
-    console.log(sessionInfo);
-};
 
 
 async function saveSessionInfo(newInfo) {
@@ -75,7 +71,6 @@ async function reuseSession(reuse = true){
     if (Object.keys(sessionInfo).length === 0 || !reuse || !sessionInfo){
         let date = new Date();
         let token = Math.random().toString(36);
-       // .toISOString().replace("T", " ").substring(0, 16),
         sessionInfo = {
             token: token,
             sessionStart: date.toLocaleString("no-NO"), 

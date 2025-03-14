@@ -1,14 +1,12 @@
 const TemplateManager = {};
 
-TemplateManager.fetchTemplate = async (path) => { // funksjon som hører til TemplateManager, path vil være url/filbane
+TemplateManager.fetchTemplate = async (path) => {
     try {
-        //laster inn ekstern template
         let response = await fetch(path);
-        let rawTemplate = await response.text(); // vil dette være html-filen? .text() gjør det om til text og det er dette rawTemplate vil inneholde
+        let rawTemplate = await response.text();
         
         let div = document.createElement("div");
-        div.innerHTML = rawTemplate; // her blir teksten fra rawTemplate som ble hentet over lagt inn i html
-        
+        div.innerHTML = rawTemplate;         
         
         let template = div.querySelector("template");
         return template;
@@ -22,15 +20,12 @@ TemplateManager.fetchTemplate = async (path) => { // funksjon som hører til Tem
 
 
 TemplateManager.cloneTemplate = (template, target, data = {}) => {
-    console.log("cloneTemplate ", template);
     const clone = template.content.cloneNode(true);
-    console.log("cloneTemplate ", clone);
     for (let key of Object.keys(data)) {
         
         const note = clone.querySelector(`#note-${key}`);
         if(note){
             note.textContent = data[key];
-            console.log("set ", key, "to", data[key]);
         }
     }
 
@@ -43,7 +38,6 @@ TemplateManager.cloneTemplate = (template, target, data = {}) => {
     
     target.innerHTML = "";
     target.appendChild(templateContainer);
-    console.log("Template container: ", clone);
     return templateContainer;
 }
 

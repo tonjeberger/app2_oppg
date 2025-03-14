@@ -1,13 +1,13 @@
 import NoteStore from "./noteStore.mjs";
 
-const noteStorageHandler = new NoteStore(); // create a new instance of the NoteStore class
+const noteStorageHandler = new NoteStore();
 
 class Note {
 
     constructor(title, content) {
         this.title = title;
         this.content = content;
-    } // this her er det som blir sendt inn som argumenter til create, read, update og purge
+    }
 
     async create(){
         const note = await noteStorageHandler.create(this);
@@ -28,7 +28,6 @@ class Note {
 
     async readAll(){
         const notes = await noteStorageHandler.readAll();
-        // console.log("notes i readAll: ", notes);
         return notes;
     }
 

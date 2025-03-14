@@ -4,7 +4,6 @@ import dbManager from "./db.mjs";
 
 class NoteStore extends RecordStoreAbstractInterface {
 
-    // her skal sql-spørringen inn
     async create(note){
         console.log("NoteStore får inn: " + note.title, note.content);
         return await dbManager.create(`INSERT INTO public."Note_table"(title, content) VALUES ($1, $2) RETURNING id, title, content;`, note.title, note.content);
