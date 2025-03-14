@@ -1,25 +1,16 @@
 import express from 'express'
-import log from './modules/log.mjs';
-import { LOG_LEVELS, eventLogger } from './modules/log.mjs';
-import { sessionMiddleware } from './uke_6_middleware/saveSessionInfo.mjs';
+import { sessionMiddleware } from './modules/saveSessionInfo.mjs';
 import router from './routes/noteRouter.mjs';
 
 const server = express();
 const port = (process.env.PORT || 8000);
-const ENABLE_LOGGING = true;
-
-const logger = log(LOG_LEVELS.VERBOSE);
 
 
 server.set('port', port);
-server.use(express.static('public')); // middleware som gjør at vi kan hente filer fra public-mappen
-server.use(express.json()); // middleware som gjør at vi kan hente json fra body
+server.use(express.static('public'));
+server.use(express.json());
 server.use(sessionMiddleware)    
 server.use(router);
-
-if(ENABLE_LOGGING){
-    server.use(logger);
-};
 
 
 server.use((req, res, next) => {

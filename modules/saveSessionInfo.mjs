@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 const directory = path.join(__dirname);
 const filename = 'sessionInfo.csv';
-const filepath = path.join(directory, "./sessions", filename);
+const filepath = path.join(directory, "../sessionLog", filename);
 console.log(filepath);
 
 let sessionInfo = {};
@@ -34,7 +34,7 @@ async function printInfo() {
 
 async function saveSessionInfo(newInfo) {
     newInfo = 
-    `Session: ${newInfo.token}, session start: ${newInfo.sessionStart}\n`; //,${newInfo.sessionEnd} om jeg får det til senere
+    `Session: ${newInfo.token}, session start (date, time): ${newInfo.sessionStart}, Session end: ${newInfo.sessionEnd}\n`; 
     
     try {
         await fs.appendFile(filepath, newInfo); 
