@@ -1,6 +1,6 @@
 {
     "liveServer.settings.port": 8000,
     "files.exclude": {
-        "public": true,
+        // "public": true,
     }
 }
