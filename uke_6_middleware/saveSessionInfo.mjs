@@ -12,27 +12,22 @@ console.log(filepath);
 
 let sessionInfo = {};
 
-// må ha en middlewarefunksjon, tar i mot req... i newSessionInfo
-export async function newSessionInfo(req, res, next) {
-    let date = new Date();
-    let token = Math.random().toString(36);
+export async function sessionMiddleware(req, res, next) {
 
-    if (Object.keys(sessionInfo).length === 0 ){
-        
-        sessionInfo = {
-            token: token,
-            sessionStart: date.toISOString().replace("T", " ").substring(0, 16),
-            sessionEnd: null // har lyst til å kunne sette en tid på hvor lenge en session skal vare
-        };
-        await saveSessionInfo(sessionInfo);
-    };  
+    try {
+        await reuseSession(false); // change to false to start new sessions
+    }catch (error) {
+        console.error("Error awaiting reuseSession", error);
+    }
+    
     if(req){
         req.sessionInfo = sessionInfo;
     }
+    printInfo();
     next();
 }; 
 
-export async function printInfo() {
+async function printInfo() {
     console.log(sessionInfo);
 };
 
@@ -47,7 +42,7 @@ async function saveSessionInfo(newInfo) {
     }
 };  
 
-export async function readSessionInfo() {
+async function readSessionInfo() {
 
         try {
             const data = await fs.readFile(filepath, "utf-8");
@@ -66,18 +61,25 @@ export async function readSessionInfo() {
             console.error("Error reading session info");  
         }
 
-        console.log(sessionInfo);
 }
 
 
-export async function reuseSession(reuse = true){ // om vi vil bruke den forrige sessionen setter man true der funksjonen brukes
-    if(!reuse){
-        await newSessionInfo();
-    } else {
+async function reuseSession(reuse = true){
+    if(reuse){
         await readSessionInfo();
-        if(!sessionInfo || Object.keys(sessionInfo).length === 0){
-            await newSessionInfo();
-        }
+        console.log("Reusing session");
     }
 
+    if (Object.keys(sessionInfo).length === 0 || !reuse || !sessionInfo){
+        let date = new Date();
+        let token = Math.random().toString(36);
+        
+        sessionInfo = {
+            token: token,
+            sessionStart: date.toISOString().replace("T", " ").substring(0, 16),
+            sessionEnd: null // mulig å kunne registrere når sessionen slutter/skal slutte?
+        };
+        await saveSessionInfo(sessionInfo);
+    }; 
+    return sessionInfo;
 }
