@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.webmanifest">
     <title>NoteTaker</title>
+    
     <link href="css/style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap" rel="stylesheet">
+    
     <script src="/app.mjs" type="module"></script> 
 </head>
 <body>
@@ -14,7 +19,7 @@
 
     <div id="note-form-div" style="display: block">
         <form id="note-form" method="post">
-            <label for="title">Title:</label><br>
+            <label for="title" >Title:</label><br>
             <input type="text" name="title" required><br>
             <label for="content">Content:</label><br>
             <textarea name="content" rows="15" cols="70"></textarea><br>

@@ -1,0 +1,16 @@
+body {
+    background-image: url("../img/paper-146904_1920.png");
+   }
+
+   /* .delius-swash-caps-regular {
+    font-family: "Delius Swash Caps", cursive;
+    font-weight: 400;
+    font-style: normal;
+  } */
+
+  h1 {
+    font-family: "Delius Swash Caps", cursive;
+    font-weight: 800;
+    font-size: 4.5em;
+    font-style: normal;
+}
