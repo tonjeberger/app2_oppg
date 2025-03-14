@@ -1,14 +1,14 @@
 {
 	"info": {
-		"_postman_id": "c7a2397c-4e83-44d4-b05a-1029986b4312",
-		"name": "onrender",
-		"description": "Tree-structure via onrender-link",
+		"_postman_id": "43fe82b8-ef55-4d51-8d9a-a0c7a8ac7341",
+		"name": "NoteTaker Render",
+		"description": "NoteTaker app for applikasjonsutvikling 2\n\nAlle linker er [https://app2-oppg.onrender.com](https://app2-oppg.onrender.com)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "41188673"
 	},
 	"item": [
 		{
-			"name": "Get data",
+			"name": "Get index page",
 			"event": [
 				{
 					"listen": "test",
@@ -27,15 +27,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://app2-oppg.onrender.com/tree",
+					"raw": "https://app2-oppg.onrender.com",
 					"protocol": "https",
 					"host": [
 						"app2-oppg",
 						"onrender",
 						"com"
-					],
-					"path": [
-						"tree"
 					]
 				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -43,7 +40,7 @@
 			"response": []
 		},
 		{
-			"name": "Post data",
+			"name": "Post note",
 			"event": [
 				{
 					"listen": "test",
@@ -72,7 +69,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://app2-oppg.onrender.com/tree",
+					"raw": "https://app2-oppg.onrender.com/notes",
 					"protocol": "https",
 					"host": [
 						"app2-oppg",
@@ -80,7 +77,7 @@
 						"com"
 					],
 					"path": [
-						"tree"
+						"notes"
 					]
 				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -88,7 +85,34 @@
 			"response": []
 		},
 		{
-			"name": "Update data",
+			"name": "Get single note",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://app2-oppg.onrender.com/notes/:id",
+					"protocol": "https",
+					"host": [
+						"app2-oppg",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"notes",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update note",
 			"event": [
 				{
 					"listen": "test",
@@ -117,7 +141,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://app2-oppg.onrender.com/tree",
+					"raw": "https://app2-oppg.onrender.com/notes/:id",
 					"protocol": "https",
 					"host": [
 						"app2-oppg",
@@ -125,7 +149,14 @@
 						"com"
 					],
 					"path": [
-						"tree"
+						"notes",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -133,7 +164,7 @@
 			"response": []
 		},
 		{
-			"name": "Delete data",
+			"name": "Delete note",
 			"event": [
 				{
 					"listen": "test",
@@ -162,7 +193,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://app2-oppg.onrender.com/tree",
+					"raw": "https://app2-oppg.onrender.com/notes/:id",
 					"protocol": "https",
 					"host": [
 						"app2-oppg",
@@ -170,7 +201,14 @@
 						"com"
 					],
 					"path": [
-						"tree"
+						"notes",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
 					]
 				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
